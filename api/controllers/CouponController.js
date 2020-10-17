@@ -10,9 +10,9 @@ module.exports = {
     create: async function (req, res) {
 
         if (req.method == "GET") return res.view('coupon/create');
-        
+
         var coupon = await Coupon.create(req.body).fetch();
-    
+
         return res.status(201).json({ id: coupon.id });
     },
 
@@ -40,7 +40,7 @@ module.exports = {
     // action - read
     read: async function (req, res) {
 
-        var thatCoupon = await Coupon.findOne(req.params.id);
+        var thatCoupon = await Coupon.find(req.params.id);
 
         if (!thatCoupon) return res.notFound();
 
@@ -50,13 +50,21 @@ module.exports = {
     // action - delete 
     delete: async function (req, res) {
 
-        var deletedPerson = await Person.destroyOne(req.params.id);
+        var deletedCoupon = await Coupon.destroyOne(req.params.id);
 
-        if (!deletedPerson) return res.notFound();
+        if (!deletedCoupon) return res.notFound();
 
         return res.ok();
     },
-  
+
+    // json function
+    json: async function (req, res) {
+
+        var everycoupon = await Coupon.find();
+
+        return res.json(everycoupon);
+    },
+
 
 };
 

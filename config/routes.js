@@ -22,12 +22,12 @@ module.exports.routes = {
     'GET /coupon/create': 'CouponController.create',
     'POST /coupon/create': 'CouponController.create',
 
-    //'GET /': 'PersonController.list',
-    //'GET /person': 'PersonController.list',
-    //'GET /person/list': 'PersonController.list',
-    //'GET /person/json': 'PersonController.json',
+    'GET /': 'CouponController.read',
+    'GET /coupon': 'CouponController.read',
+    'GET /coupon/read/:id': 'CouponController.read',
+    'GET /coupon/list': 'CouponController.read',
 
-    'GET /coupon/read/:id': 'CouponnController.read',
+    'GET /coupon/json': 'CouponController.json',
 
     'POST /coupon/delete/:id': 'CouponController.delete',
 

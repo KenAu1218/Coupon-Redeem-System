@@ -18,10 +18,10 @@
     <div class="field">
         <label class="label">Region</label>
         <div class="control">
-          
-            <div class="select" >
-               
-                <select onchange="regionSelected(this.value)" name = "region" >
+
+            <div class="select">
+
+                <select onchange="regionSelected(this.value)" name="region">
                     <option value="<%= coupon.region%>"> <%= coupon.region%> </option>
                     <!--<option value="" {{ old ('region', $DB-><%= coupon.region %>) == '' ? 'selected' : ''}} >Select the region</option>
                     <option value="KWL" {{ old ('region', $DB-><%= coupon.region %>) == 'KWL' ? 'selected' : ''}} > Kowloon</option>
@@ -36,7 +36,7 @@
         <label class="label">Mall</label>
         <div class="control">
             <div class="select">
-                <select id="mall" name="mall" value="<%= coupon.mall%>" >
+                <select id="mall" name="mall" value="<%= coupon.mall%>">
                 </select>
             </div>
         </div>
@@ -46,7 +46,7 @@
     <div class="field">
         <label class="label">Image</label>
         <div class="control">
-            <input class="input" type="text" name="image"  value="<%= coupon.image%>" required >
+            <input class="input" type="text" name="image" value="<%= coupon.image%>" required>
         </div>
     </div>
 
@@ -55,14 +55,14 @@
     <div class="field">
         <label class="label">Quota</label>
         <div class="control">
-            <input class="input" type="number" name="quota"  value="<%= coupon.quota%>" required >
+            <input class="input" type="number" name="quota" value="<%= coupon.quota%>" required>
         </div>
     </div>
 
     <div class="field">
         <label class="label">Coin</label>
         <div class="control">
-            <input class="input" type="number" name="coin" value="<%= coupon.coin%>" required >
+            <input class="input" type="number" name="coin" value="<%= coupon.coin%>" required>
         </div>
     </div>
 
@@ -70,7 +70,7 @@
     <div class="field">
         <label class="label">Detail</label>
         <div class="control">
-            <textarea class="textarea" placeholder="Textarea" name="detail" value="<%= coupon.detail%>" ></textarea>
+            <textarea class="textarea" placeholder="Textarea" name="detail"><%= coupon.detail%></textarea>
         </div>
     </div>
 
@@ -80,6 +80,19 @@
             <button class="button is-link" type="submit">Submit</button>
         </div>
     </div>
+</form>
+
+<br>
+<br>
+
+<form action="/coupon/delete/<%= coupon.id %>" method="post">
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit" >Delete</button>
+        </div>
+    </div>
+
 </form>
 
 
