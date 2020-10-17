@@ -1,0 +1,135 @@
+<!--create.ejs-->
+
+
+
+<form action="/coupon/create" method="post">
+
+    <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+            <input class="input" type="text" name="title" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Restaurant</label>
+        <div class="control">
+            <input class="input" type="text" name="restaurant" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Region</label>
+        <div class="control">
+            <div class="select">
+                <select onchange="regionSelected(this.value)" name = "region">
+                    <option value="">Select the region</option>
+                    <option value="KWL">Kowloon</option>
+                    <option value="HKI">HK Island</option>
+                    <option value="NT">New Territories</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Mall</label>
+        <div class="control">
+            <div class="select" >
+                <select id="mall" disabled name = "mall">
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label class="label">Image</label>
+        <div class="control">
+            <input class="input" type="text" name="image" required>
+        </div>
+    </div>
+
+
+
+    <div class="field">
+        <label class="label">Quota</label>
+        <div class="control">
+            <input class="input" type="number" name="quota" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Coin</label>
+        <div class="control">
+            <input class="input" type="number" name="coin" required>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label class="label">Detail</label>
+        <div class="control">
+            <textarea class="textarea" placeholder="Textarea" name = "detail" ></textarea>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    var hkI = ["IFC Mall", "Pacific Place", "Time Square", "Element"];
+    var kwl = ["Harbour City", "Festival Walk", "Megabox", "APM"];
+    var nt = ["New Town Plaza", "Tsuen Wan Plaza"];
+
+    function regionSelected(region) {
+
+
+        var mallElem = document.getElementById("mall");
+        mallElem.options.length = 0;
+
+        if (region == "HKI") {
+
+            hkI.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else if (region == "KWL") {
+
+            kwl.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else if (region = "NT") {
+
+            nt.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else {
+            mallElem.disabled = true;
+        }
+    }
+
+</script>

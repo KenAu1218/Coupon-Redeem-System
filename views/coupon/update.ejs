@@ -1,0 +1,135 @@
+<!--update.ejs-->
+<form action="/coupon/update/<%= coupon.id %>" method="post">
+
+    <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+            <input class="input" type="text" name="title" value="<%= coupon.title%>" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Restaurant</label>
+        <div class="control">
+            <input class="input" type="text" name="restaurant" value="<%= coupon.restaurant%>" required>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Region</label>
+        <div class="control">
+          
+            <div class="select" >
+               
+                <select onchange="regionSelected(this.value)" name = "region" >
+                    <option value="<%= coupon.region%>"> <%= coupon.region%> </option>
+                    <!--<option value="" {{ old ('region', $DB-><%= coupon.region %>) == '' ? 'selected' : ''}} >Select the region</option>
+                    <option value="KWL" {{ old ('region', $DB-><%= coupon.region %>) == 'KWL' ? 'selected' : ''}} > Kowloon</option>
+                    <option value="HKI" {{ old ('region', $DB-><%= coupon.region %>) == 'HKI' ? 'selected' : ''}} >HK Island</option>
+                    <option value="NT" {{ old ('region', $DB-><%= coupon.region %>) == 'NT' ? 'selected' : ''}} >New Territories</option>-->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Mall</label>
+        <div class="control">
+            <div class="select">
+                <select id="mall" name="mall" value="<%= coupon.mall%>" >
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label class="label">Image</label>
+        <div class="control">
+            <input class="input" type="text" name="image"  value="<%= coupon.image%>" required >
+        </div>
+    </div>
+
+
+
+    <div class="field">
+        <label class="label">Quota</label>
+        <div class="control">
+            <input class="input" type="number" name="quota"  value="<%= coupon.quota%>" required >
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Coin</label>
+        <div class="control">
+            <input class="input" type="number" name="coin" value="<%= coupon.coin%>" required >
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label class="label">Detail</label>
+        <div class="control">
+            <textarea class="textarea" placeholder="Textarea" name="detail" value="<%= coupon.detail%>" ></textarea>
+        </div>
+    </div>
+
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    var hkI = ["IFC Mall", "Pacific Place", "Time Square", "Element"];
+    var kwl = ["Harbour City", "Festival Walk", "Megabox", "APM"];
+    var nt = ["New Town Plaza", "Tsuen Wan Plaza"];
+
+    function regionSelected(region) {
+
+
+        var mallElem = document.getElementById("mall");
+        mallElem.options.length = 0;
+
+        if (region == "HKI") {
+
+            hkI.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else if (region == "KWL") {
+
+            kwl.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else if (region = "NT") {
+
+            nt.forEach(function (item) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                mallElem.add(option);
+            });
+
+            mallElem.disabled = false;
+
+        } else {
+            mallElem.disabled = true;
+        }
+    }
+
+</script>

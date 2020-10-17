@@ -1,0 +1,24 @@
+<table class="table is-bordered is-striped is-hoverable is-fullwidth">
+
+
+    <tr>
+        <td><%= coupon.title %></td>
+        <td><%= coupon.restaurant %></td>
+        <td><%= coupon.region %></td>
+        <td><%= coupon.mall %></td>
+        <td><%= coupon.image %></td>
+        <td><%= coupon.coin %></td>
+        <td><%= coupon.detail %></td>
+    </tr>
+
+</table>
+
+<form action="/coupon/delete/<%= coupon.id %>" method="post">
+
+<div class="field">
+    <div class="control">
+        <button class=is-link type = submit>Delete this</button>
+    </div>
+</div>
+
+</form>
