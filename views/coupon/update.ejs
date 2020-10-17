@@ -21,12 +21,12 @@
 
             <div class="select">
 
-                <select onchange="regionSelected(this.value)" name="region">
-                    <option value="<%= coupon.region%>"> <%= coupon.region%> </option>
+                <select onchange="regionSelected(this.value)" name="region" class= "hehe">
+                    <option value= "KWL" > Kowloon </option>
                     <!--<option value="" {{ old ('region', $DB-><%= coupon.region %>) == '' ? 'selected' : ''}} >Select the region</option>
-                    <option value="KWL" {{ old ('region', $DB-><%= coupon.region %>) == 'KWL' ? 'selected' : ''}} > Kowloon</option>
-                    <option value="HKI" {{ old ('region', $DB-><%= coupon.region %>) == 'HKI' ? 'selected' : ''}} >HK Island</option>
-                    <option value="NT" {{ old ('region', $DB-><%= coupon.region %>) == 'NT' ? 'selected' : ''}} >New Territories</option>-->
+                    <option value="KWL" {{ old ('region', $DB-><%= coupon.region %>) == 'KWL' ? 'selected' : ''}} > Kowloon</option>-->
+                    <option value= "HKI">HK Island</option>
+                    <option value=  "NT" >New Territories</option>
                 </select>
             </div>
         </div>
@@ -144,5 +144,18 @@
             mallElem.disabled = true;
         }
     }
+
+</script>
+
+
+<script>
+    function region(region) {
+
+       var ioi = document.querySelector('option[value="Kowloon"]').selected = "selected";
+
+
+    }
+
+
 
 </script>

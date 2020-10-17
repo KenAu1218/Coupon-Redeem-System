@@ -1,0 +1,81 @@
+<p><large><strong>Coupon</strong></large></p>
+<p>Redeem your coins for dining coupons</p>
+<br>
+<br>
+
+<table class= "table is-bordered is-striped is-fullwidth">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Restaurant</th>
+        <th></th>         
+      </tr>
+
+      <% coupon.forEach(function(rubbishcoupon) { %>
+
+        <tr>
+            <td><%= rubbishcoupon.id %></td>
+            <td><%= rubbishcoupon.title %></td>
+            <td><%= rubbishcoupon.restaurant %></td>
+            <td><a href= "http://localhost:1337/coupon/update/<%=rubbishcoupon.id%>">Update<a></td>
+        </tr>
+    
+        <% }); %>
+
+    </thead>
+    <tbody id="TheBody">
+    </tbody>
+  </table>
+
+<!--<script>
+
+    var col1 = ["Full time student checking (Age 22 and under) ", "Customers over age 65", "Below  $500.00"];
+    var col2 = ["None", "None", "$8.00"];
+
+    function createtable() {
+       
+        for (var j = 0; j < col1.length; j++) {
+            if (j % 2 == 0) {
+                document.write("<tr><td>" + col1[j] + " </td>");
+                document.write("<td>" + col2[j] + "</td></tr>");
+            } else {
+                document.write("<tr  bgcolor='#aeb2bf'><td>" + col1[j] + " </td>");
+                document.write("<td>" + col2[j] + "</td></tr1>");
+            }
+        }
+    }
+</script>-->
+
+
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function(event) { 
+    //  var col1 = ["Full time student checking (Age 22 and under) ", "Customers over age 65", "Below  $500.00" ];
+    //  var col2 = ["None", "None", "$8.00"];
+
+    var l = coupon.id[1].title;
+    
+      var TheInnerHTML ="";
+    //  for (var j = 0; j < coupon.length; j++) {
+        TheInnerHTML += "<tr><td>"+  +"</td></tr>";
+    //}
+    document.getElementById("TheBody").innerHTML = TheInnerHTML;});
+
+    
+    </script>
+
+<!--<script>
+    // The next line document.addEventListener....
+    // tells the browser to execute the javascript in the function after
+    // the DOMContentLoaded event is complete, i.e. the browser has
+    // finished loading the full webpage
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var col1 = ["Full time student checking (Age 22 and under) ", "Customers over age 65", "Below  $500.00" ];
+      var col2 = ["None", "None", "$8.00"];
+      var TheInnerHTML ="";
+      for (var j = 0; j < col1.length; j++) {
+        TheInnerHTML += "<tr><td>"+col1[j]+"</td><td>"+col2[j]+"</td></tr>";
+    }
+    document.getElementById("TheBody").innerHTML = TheInnerHTML;});
+    </script>-->

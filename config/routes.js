@@ -34,6 +34,7 @@ module.exports.routes = {
     'GET /coupon/update/:id': 'CouponController.update',
     'POST /coupon/update/:id': 'CouponController.update',
 
+    'GET /coupon/admin': 'CouponController.admin',
 
     'GET /coupon/search': 'CouponController.search',
     'GET /coupon/paginate': 'CouponController.paginate',

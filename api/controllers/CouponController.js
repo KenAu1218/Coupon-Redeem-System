@@ -40,11 +40,9 @@ module.exports = {
     // action - read
     read: async function (req, res) {
 
-        var thatCoupon = await Coupon.find(req.params.id);
+        var Coupons = await Coupon.find();
 
-        if (!thatCoupon) return res.notFound();
-
-        return res.view('coupon/read', { coupon: thatCoupon });
+        return res.view('coupon/read', { coupon: Coupons });
     },
 
     // action - delete 
@@ -63,6 +61,15 @@ module.exports = {
         var everycoupon = await Coupon.find();
 
         return res.json(everycoupon);
+    },
+
+
+    // admin function
+    admin: async function (req, res) {
+
+        var Coupons = await Coupon.find();
+
+        return res.view('coupon/admin', { coupon: Coupons });
     },
 
 
