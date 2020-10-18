@@ -24,7 +24,7 @@ module.exports.routes = {
 
     'GET /': 'CouponController.read',
     'GET /coupon': 'CouponController.read',
-    'GET /coupon/read/:id': 'CouponController.read',
+    'GET /coupon/read': 'CouponController.read',
     'GET /coupon/list': 'CouponController.read',
 
     'GET /coupon/json': 'CouponController.json',
@@ -35,6 +35,8 @@ module.exports.routes = {
     'POST /coupon/update/:id': 'CouponController.update',
 
     'GET /coupon/admin': 'CouponController.admin',
+
+    'GET /coupon/detail/:id': 'CouponController.detail',
 
     'GET /coupon/search': 'CouponController.search',
     'GET /coupon/paginate': 'CouponController.paginate',

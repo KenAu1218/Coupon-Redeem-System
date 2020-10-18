@@ -68,6 +68,14 @@
 
 
     <div class="field">
+        <label class="label">Expire Date</label>
+        <div class="control">
+            <input class="input" type="text" name="expireDate" required>
+        </div>
+    </div>
+
+
+    <div class="field">
         <label class="label">Detail</label>
         <div class="control">
             <textarea class="textarea" placeholder="Textarea" name = "detail" ></textarea>
@@ -83,16 +91,24 @@
 </form>
 
 
+
+
 <script>
     var hkI = ["IFC Mall", "Pacific Place", "Time Square", "Element"];
     var kwl = ["Harbour City", "Festival Walk", "Megabox", "APM"];
     var nt = ["New Town Plaza", "Tsuen Wan Plaza"];
 
+    
+
     function regionSelected(region) {
 
+        document.getElementById("mall").innerHTML = "";
 
         var mallElem = document.getElementById("mall");
+        
         mallElem.options.length = 0;
+        
+        mallElem.innerHTML= "";
 
         if (region == "HKI") {
 

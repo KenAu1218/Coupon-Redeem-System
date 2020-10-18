@@ -40,6 +40,11 @@ module.exports = {
         type: "integer"
     },
 
+    expireDate: {
+
+        type: "string"
+    },
+
     detail:{
         type: "string"
     }

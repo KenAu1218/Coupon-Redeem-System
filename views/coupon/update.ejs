@@ -1,4 +1,5 @@
 <!--update.ejs-->
+
 <form action="/coupon/update/<%= coupon.id %>" method="post">
 
     <div class="field">
@@ -21,12 +22,11 @@
 
             <div class="select">
 
-                <select onchange="regionSelected(this.value)" name="region" class= "hehe">
-                    <option value= "KWL" > Kowloon </option>
-                    <!--<option value="" {{ old ('region', $DB-><%= coupon.region %>) == '' ? 'selected' : ''}} >Select the region</option>
-                    <option value="KWL" {{ old ('region', $DB-><%= coupon.region %>) == 'KWL' ? 'selected' : ''}} > Kowloon</option>-->
-                    <option value= "HKI">HK Island</option>
-                    <option value=  "NT" >New Territories</option>
+                <select onchange="regionSelected(this.value)" name="region" class="hehe">
+                    <option id="non" vaule="">Select the region</option>
+                    <option id="KWL" vaule="KWL">Kowloon </option>
+                    <option id="HKI" value="HKI">HK Island</option>
+                    <option id="NT" value="NT">New Territories</option>
                 </select>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <label class="label">Mall</label>
         <div class="control">
             <div class="select">
-                <select id="mall" name="mall" value="<%= coupon.mall%>">
+                <select id="mall" name="mall" disabled>
                 </select>
             </div>
         </div>
@@ -66,6 +66,13 @@
         </div>
     </div>
 
+    <div class="field">
+        <label class="label">Expire Date</label>
+        <div class="control">
+            <input class="input" type="text" name="expireDate" value="<%= coupon.expireDate%>" required>
+        </div>
+    </div>
+
 
     <div class="field">
         <label class="label">Detail</label>
@@ -82,18 +89,22 @@
     </div>
 </form>
 
+<!--
 <br>
-<br>
+<br>-->
 
-<form action="/coupon/delete/<%= coupon.id %>" method="post">
+
+<form action="/coupon/delete/<%= coupon.id %>" method="post" >
 
     <div class="field">
-        <div class="control">
-            <button class="button is-link" type="submit" >Delete</button>
+        <div class="control" style="float: right;">
+            <button class="button is-link" type="submit">Delete</button>
         </div>
     </div>
 
 </form>
+
+
 
 
 <script>
@@ -113,10 +124,17 @@
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
+                option.id = item;
                 mallElem.add(option);
+
+                if (region == item) {
+                    document.getElementById(item).selected = "selected";
+                }
             });
 
             mallElem.disabled = false;
+
+
 
         } else if (region == "KWL") {
 
@@ -124,7 +142,13 @@
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
+                option.id = item;
                 mallElem.add(option);
+
+                if (region == item) {
+                    document.getElementById(item).selected = "selected";
+                }
+
             });
 
             mallElem.disabled = false;
@@ -135,10 +159,18 @@
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
+                option.id = item;
                 mallElem.add(option);
+
+                if (region == item) {
+                    document.getElementById(item).selected = "selected";
+                }
+
             });
 
             mallElem.disabled = false;
+
+
 
         } else {
             mallElem.disabled = true;
@@ -149,12 +181,27 @@
 
 
 <script>
-    function region(region) {
-
-       var ioi = document.querySelector('option[value="Kowloon"]').selected = "selected";
 
 
+    alert("Page is loaded");
+
+
+    //document.querySelector('#4').selected = "selected";
+
+    if ("<%= coupon.region %>" == "KWL") {
+        document.getElementById("KWL").selected = "selected";
+        regionSelected("KWL");
+    } else if ("<%= coupon.region %>" == "HKI") {
+        document.getElementById("HKI").selected = "selected";
+        regionSelected("HKI");
+    } else if ("<%= coupon.region %>" == "NT") {
+        document.getElementById("NT").selected = "selected";
+        regionSelected("NT");
+    } else {
+        document.getElementById("non").selected = "selected";
+        regionSelected("");
     }
+
 
 
 

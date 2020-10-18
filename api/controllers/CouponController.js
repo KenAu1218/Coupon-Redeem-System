@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+
+
 module.exports = {
 
     create: async function (req, res) {
@@ -27,6 +29,7 @@ module.exports = {
 
             return res.view('coupon/update', { coupon: thatCoupon });
 
+            
         } else {
 
             var updatedCoupon = await Coupon.updateOne(req.params.id).set(req.body);
@@ -37,13 +40,7 @@ module.exports = {
         }
     },
 
-    // action - read
-    read: async function (req, res) {
-
-        var Coupons = await Coupon.find();
-
-        return res.view('coupon/read', { coupon: Coupons });
-    },
+    
 
     // action - delete 
     delete: async function (req, res) {
@@ -72,6 +69,25 @@ module.exports = {
         return res.view('coupon/admin', { coupon: Coupons });
     },
 
+    // read function
+    read: async function (req, res) {
+
+        var Coupons = await Coupon.find();
+
+        return res.view('coupon/read', { coupon: Coupons });
+    },
+
+    // detail function
+    detail: async function (req, res) {
+
+            var thatCoupon = await Coupon.findOne(req.params.id);
+
+            if (!thatCoupon) return res.notFound();
+
+            return res.view('coupon/detail', { coupon: thatCoupon });
+
+            
+    },
 
 };
 
