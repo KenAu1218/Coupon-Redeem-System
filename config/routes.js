@@ -39,7 +39,8 @@ module.exports.routes = {
     'GET /coupon/detail/:id': 'CouponController.detail',
 
     'GET /coupon/search': 'CouponController.search',
-    'GET /coupon/paginate': 'CouponController.paginate',
+
+    //'GET /coupon/searchEngine': 'CouponController.searchEngine',
 
     /***************************************************************************
     *                                                                          *

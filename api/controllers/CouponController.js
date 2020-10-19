@@ -89,5 +89,67 @@ module.exports = {
             
     },
 
+    //// action - search
+    //search: async function (req, res) {
+
+    //    var limit = Math.max(2, 1) || 1;
+    //    var offset = Math.max(req.query.offset, 0) || 0;
+
+    //    var someCoupons = await Coupon.find({
+    //        limit: limit,
+    //        skip: offset
+    //    });
+
+    //    var count = await Coupon.count();
+
+    //    return res.view('coupon/search', { coupon: someCoupons, numOfRecords: count });
+    //},
+
+    search: async function (req, res) {
+
+       
+
+        var whereClause = {};
+
+        if (req.query.region && req.query.region != "" ){
+            
+        whereClause.region = { contains: req.query.region };
+
+        var limit = Math.max(2, 1) || 1;
+        var offset = Math.max(req.query.offset, 0) || 0;
+
+        var thoseCoupons = await Coupon.find({
+            where: whereClause,
+            limit: limit,
+            skip: offset
+        });
+
+        var j = await Coupon.find({
+            where: whereClause,
+            
+        });
+
+
+        
+        return res.view('coupon/search', { coupon: thoseCoupons, numOfRecords: j.length });
+
+    }else {
+
+        var limit = Math.max(2, 1) || 1;
+        var offset = Math.max(req.query.offset, 0) || 0;
+
+        var someCoupons = await Coupon.find({
+            limit: limit,
+            skip: offset
+        });
+
+        var count = await Coupon.count();
+
+        return res.view('coupon/search', { coupon: someCoupons, numOfRecords: count });
+        
+    }
+
+
+    } 
 };
 

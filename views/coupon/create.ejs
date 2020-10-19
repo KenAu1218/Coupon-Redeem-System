@@ -36,7 +36,7 @@
         <label class="label">Mall</label>
         <div class="control">
             <div class="select" >
-                <select id="mall" disabled name = "mall">
+                <select id="mall" name = "mall" disabled>
                 </select>
             </div>
         </div>
@@ -102,13 +102,14 @@
 
     function regionSelected(region) {
 
-        document.getElementById("mall").innerHTML = "";
+       
 
         var mallElem = document.getElementById("mall");
         
         mallElem.options.length = 0;
         
-        mallElem.innerHTML= "";
+        console.log("hi");
+        
 
         if (region == "HKI") {
 
