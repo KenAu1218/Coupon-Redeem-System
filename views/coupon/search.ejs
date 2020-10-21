@@ -37,14 +37,28 @@
             <% }); %>
 
 
-            <% if(count < 2 ){ %>
+            <% if(count == 1 ){ %>
 
             <div class="container" style="margin-right: 60px;" >
                 
                     
             </div>
 
-            <% } %>
+            
+
+            <% } else if(count == 0 ){ %>
+
+                <div class="container" style="margin-right: 350px; margin-left: 50px;" >
+                    <p >No Coupons found</p>  
+                         
+                </div>
+
+                <div class="container" style="margin-right: 100px;" >
+                    
+                    
+                </div>
+    
+                <% } %>
 
             <form action="/coupon/search" method="GET" style="margin-left: 50px; margin-top: -120px;">
 
@@ -65,21 +79,21 @@
                 <div class="field">
                     <label class="label">Min Coin</label>
                     <div class="control">
-                        <input class="input" type="text" name="minCoin" id="minCoin">
+                        <input class="input" type="number" name="minCoin" id="minCoin" value = "<%= req.query.minCoin%>">
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Max Coin</label>
                     <div class="control">
-                        <input class="input" type="text" name="maxCoin" id="maxCoin">
+                        <input class="input" type="number" name="maxCoin" id="maxCoin" value="<%= req.query.maxCoin %>">
                     </div>
                 </div>
 
                 <div class="field">
-                    <label class="label">Vaild On</label>
+                    <label class="label">Vaild On and Before</label>
                     <div class="control">
-                        <input class="input" type="text" name="vaildOn" id="vaildOn">
+                        <input class="input" type="date" name="vaildOn" id="vaildOn" min="2018-01-01" max="2046-12-31" value="<%= req.query.vaildOn %>"> 
                     </div>
                 </div>
 
@@ -132,6 +146,9 @@
                 </section>
 
                 <script>
+
+                    document.querySelector('option[value="<%=req.query.region%>"]').selected = true;
+
                     function setPagination() {
 
 
@@ -149,38 +166,9 @@
                         var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
 
 
+                        
 
-
-                        var r = document.getElementById("region123").value;
-                        var mi = document.getElementById("minCoin").value;
-                        var mx = document.getElementById("maxCoin").value;
-                        var d = document.getElementById("vaildOn").value;
-
-
-                        var u = r.value;
-                        var o = mi.value;
-
-                        //var r = document.querySelector("#region123").value;
-                        //var mi = document.querySelector("#minCoin").value;
-                        //var mx = document.querySelector("#maxCoin").value;
-                        //var d = document.querySelector("#vaildOn").value;
-
-                        //var r = document.querySelector('select[name="region"]').value;
-                        //var mi = document.querySelector('input[name="minCoin"]').value;
-                        //var mx = document.querySelector('input[name="maxCoin"]').value;
-                        //var d = document.querySelector('input[name="vaildOn"]').value;
-
-                        console.log("r: " + u);
-                        console.log("r: " + o);
-                        console.log("r: " + mx);
-                        console.log("r: " + d);
-
-                        console.log("currentweb: " + window.location.href);
-
-
-
-
-                        var baseUrl = "/coupon/search?region=" + r + "&minCoin=" + mi + "&maxCoin=" + mx + "&vaildOn=" + d + "&limit=" + limit + "&offset=";
+                        var baseUrl = "/coupon/search?region=" + "<%= req.query.region %>" + "&minCoin=" + "<%= req.query.minCoin %>" + "&maxCoin=" + "<%= req.query.maxCoin %>" + "&vaildOn=" + "<%= req.query.vaildOn %>" + "&limit=" + limit + "&offset=";
 
 
 

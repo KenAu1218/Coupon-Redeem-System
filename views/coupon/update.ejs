@@ -19,14 +19,12 @@
     <div class="field">
         <label class="label">Region</label>
         <div class="control">
-
             <div class="select">
-
-                <select onchange="regionSelected(this.value)" name="region" class="hehe">
-                    <option id="non" vaule="">Select the region</option>
-                    <option id="KWL" vaule="KWL">Kowloon </option>
-                    <option id="HKI" value="HKI">HK Island</option>
-                    <option id="NT" value="NT">New Territories</option>
+                <select onchange="regionSelected(this.value)" name="region" id = "region" >
+                    <option vaule="">Select the region</option>
+                    <option value="HKI">HK Island</option>
+                    <option value= "KWL">Kowloon </option>
+                    <option value="NT">New Territories</option>
                 </select>
             </div>
         </div>
@@ -69,7 +67,7 @@
     <div class="field">
         <label class="label">Expire Date</label>
         <div class="control">
-            <input class="input" type="text" name="expireDate" value="<%= coupon.expireDate%>" required>
+            <input class="input" type="date" name="expireDate" min="2018-01-01" max="2046-12-31" value="<%= coupon.expireDate%>" required>
         </div>
     </div>
 
@@ -94,7 +92,7 @@
 <br>-->
 
 
-<form action="/coupon/delete/<%= coupon.id %>" method="post" >
+<form action="/coupon/delete/<%= coupon.id %>" method="post">
 
     <div class="field">
         <div class="control" style="float: right;">
@@ -112,12 +110,17 @@
     var kwl = ["Harbour City", "Festival Walk", "Megabox", "APM"];
     var nt = ["New Town Plaza", "Tsuen Wan Plaza"];
 
+    
+
     function regionSelected(region) {
-
-
+        
+       
         var mallElem = document.getElementById("mall");
+        
         mallElem.options.length = 0;
+        
         console.log("hi");
+        
 
         if (region == "HKI") {
 
@@ -125,17 +128,10 @@
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
-                option.id = item;
                 mallElem.add(option);
-
-                if (region == item) {
-                    document.getElementById(item).selected = "selected";
-                }
             });
 
             mallElem.disabled = false;
-
-
 
         } else if (region == "KWL") {
 
@@ -143,35 +139,21 @@
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
-                option.id = item;
                 mallElem.add(option);
-
-                if (region == item) {
-                    document.getElementById(item).selected = "selected";
-                }
-
             });
 
             mallElem.disabled = false;
 
-        } else if (region = "NT") {
+        } else if (region == "NT") {
 
             nt.forEach(function (item) {
                 var option = document.createElement("option");
                 option.text = item;
                 option.value = item;
-                option.id = item;
                 mallElem.add(option);
-
-                if (region == item) {
-                    document.getElementById(item).selected = "selected";
-                }
-
             });
 
             mallElem.disabled = false;
-
-
 
         } else {
             mallElem.disabled = true;
@@ -182,28 +164,27 @@
 
 
 <script>
+    //alert("Page is loaded");
 
+    //console.log("hi");
 
-    alert("Page is loaded");
+    document.querySelector('option[value="<%=coupon.region%>"]').selected = true;
+    regionSelected(document.getElementById('region').value);
+    document.querySelector('option[value="<%=coupon.mall%>"]').selected = true;
 
+    //document.querySelector('option[value="HKI"]').selected = "selected";
 
-    //document.querySelector('#4').selected = "selected";
-
-    if ("<%= coupon.region %>" == "KWL") {
-        document.getElementById("KWL").selected = "selected";
-        regionSelected("KWL");
-    } else if ("<%= coupon.region %>" == "HKI") {
-        document.getElementById("HKI").selected = "selected";
-        regionSelected("HKI");
-    } else if ("<%= coupon.region %>" == "NT") {
-        document.getElementById("NT").selected = "selected";
-        regionSelected("NT");
-    } else {
-        document.getElementById("non").selected = "selected";
-        regionSelected("");
-    }
-
-
-
-
+    //if ("<%= coupon.region %>" == "KWL") {
+    //    document.getElementById("KWL").selected = "selected";
+    //    regionSelected("KWL");
+    //} else if ("<%= coupon.region %>" == "HKI") {
+    //    document.getElementById("HKI").selected = "selected";
+    //    regionSelected("HKI");
+    //} else if ("<%= coupon.region %>" == "NT") {
+    //    document.getElementById("NT").selected = "selected";
+    //    regionSelected("NT");
+    //} else {
+    //    document.getElementById("non").selected = "selected";
+    //    regionSelected("");
+    //}
 </script>
