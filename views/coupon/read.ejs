@@ -72,19 +72,86 @@
 <section>
 
 
-    <div class="couponContainer ">
+    <div class="couponContainerRead">
 
-        <div class="columns is-mobile is-multiline is-vcentered">
+        <div class="columns  is-mobile is-multiline is-vcentered">
 
 
-            <div class="column is-one-quarter is-mobile card">
+            <div class="column is-mobile">
 
                 <div class="text-block">
                     <p>HK Island</p>
                 </div>
                 <% var count = 0; %>
+                <% coupon.forEach(function(coupon) { %>
+                <% if(coupon.region == "HKI" && count < 2) { %>
+                <a href="http://localhost:1337/coupon/detail/<%= coupon.id %>">
+                    <figure>
+                        <img style="object-fit:cover" src="<%= coupon.image %>" />
+                    </figure>
+
+                    <div class="text-block">
+                        <p><strong><%= coupon.restaurant %></strong></p>
+                        <p><%= coupon.title %></p>
+                        <br>
+                        <p>Coind: <%= coupon.coin %></p>
+                    </div>
+                    <br>
+                </a>
+                <% count++; %>
+                <% }}); %>
+
+            </div>
+        </div>
+    </div>
+    <!--<br>
+    <br>-->
+
+    <div class="couponContainerRead ">
+
+        <div class="columns  is-mobile is-multiline is-vcentered">
+
+            <div class="column  is-mobile ">
+                <div class="text-block">
+                    <p>Kowloon</p>
+                </div>
+                <% var count = 0; %>
                 <% coupon.forEach(function(rubbishcoupon) { %>
-                <% if(rubbishcoupon.region == "HKI" && count < 2) { %>
+                <% if(rubbishcoupon.region == "KWL" && count < 2) { %>
+                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
+                    <figure>
+                        <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
+                    </figure>
+
+                    <div class="text-block">
+                        <p><strong><%= rubbishcoupon.restaurant %></strong></p>
+                        <p><%= rubbishcoupon.title %></p>
+                        <br>
+                        <p>Coind: <%= rubbishcoupon.coin %></p>
+                    </div>
+                    <br>
+                    <a>
+                        <% count++; %>
+                        <% }}); %>
+            </div>
+        </div>
+    </div>
+
+    <!--<br>
+    <br>-->
+
+    <div class="couponContainerRead ">
+
+        <div class="columns  is-mobile is-multiline is-vcentered">
+
+
+            <div class="column is-mobile">
+                <div class="text-block">
+                    <p>New Territories</p>
+                </div>
+                <% var count = 0; %>
+                <% coupon.forEach(function(rubbishcoupon) { %>
+                <% if(rubbishcoupon.region == "NT" && count < 2) { %>
                 <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
@@ -100,64 +167,8 @@
                 </a>
                 <% count++; %>
                 <% }}); %>
-
             </div>
-
-
-
-            <div class="column is-one-quarter is-mobile card">
-                <div class="text-block">
-                    <p>Kowloon</p>
-                </div>
-                <% var count = 0; %>
-                <% coupon.forEach(function(rubbishcoupon) { %>
-                <% if(rubbishcoupon.region == "KWL" && count < 2) { %>
-                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
-                <figure>
-                    <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
-                </figure>
-
-                <div class="text-block">
-                    <p><strong><%= rubbishcoupon.restaurant %></strong></p>
-                    <p><%= rubbishcoupon.title %></p>
-                    <br>
-                    <p>Coind: <%= rubbishcoupon.coin %></p>
-                </div>
-                <br>
-                <a>
-                <% count++; %>
-                <% }}); %>
-            </div>
-
-            <div class="column is-one-quarter is-mobile card">
-                <div class="text-block">
-                    <p>New Territories</p>
-                </div>
-                <% var count = 0; %>
-                <% coupon.forEach(function(rubbishcoupon) { %>
-                <% if(rubbishcoupon.region == "NT" && count < 2) { %>
-                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
-                <figure>
-                    <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
-                </figure>
-
-                <div class="text-block">
-                    <p><strong><%= rubbishcoupon.restaurant %></strong></p>
-                    <p><%= rubbishcoupon.title %></p>
-                    <br>
-                    <p>Coind: <%= rubbishcoupon.coin %></p>
-                </div>
-                <br>
-                </a>
-                <% count++; %>
-                <% }}); %>
-            </div>
-
-
-
-
             <div>
-
             </div>
 
 </section>

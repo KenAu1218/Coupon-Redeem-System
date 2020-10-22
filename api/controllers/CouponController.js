@@ -72,7 +72,13 @@ module.exports = {
     // read function
     read: async function (req, res) {
 
-        var Coupons = await Coupon.find();
+        var limit = Math.max(2, 1) || 1;
+
+
+        var Coupons = await Coupon.find({
+            //limit: limit
+            
+        });
 
         return res.view('coupon/read', { coupon: Coupons });
     },
@@ -164,34 +170,7 @@ module.exports = {
                 whereClause.coin = {'>=': min, '<=': max}; // req.query.minCoin is string type
             }
 
-            //if (req.query.minCoin != "" || req.query.maxCoin != "") {
-
-            //   var p = Array.apply(null, {length: 10}).map(Number.call, Number);
-            //    //p[0] = 9;
-            //    //p[1] = 5;
-            //    type of.p[0];
-
-            //    console.log(p[0]+" "+ p[1] + p[2]);
-
-            //    //whereClause.coin ={ contains: p};
-            //}
-            //var p = Math.max(parseInt(req.query.maxCoin), parseInt(req.query.minCoin));
-
-            //var oo = await Coupon.find();
-
-            //var i = 0;
-
-            //var k = {};
-
-            //for( i;  i <oo.length ; i++){
-            //    if(oo[i].coin < parseInt(req.query.maxCoin) && oo[i].coin > parseInt(req.query.minCoin) && oo[i].region == req.query.region ){
-            //        console.log(i + " " + oo[i].id);
-            //        //whereClause.id = { contains: oo[i].id };
-            //        //k.add(oo[i].id);
-
-            //    }
-            //}
-            //console.log(k[0]+ " "+ k[1]+ k[2]);
+           
 
             var limit = Math.max(2, 1) || 1;
             var offset = Math.max(req.query.offset, 0) || 0;

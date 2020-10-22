@@ -5,6 +5,7 @@
     <title>New Sails App</title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <%/* If you want to discourage search engines from indexing this site, uncomment the following line: */%>
@@ -38,23 +39,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <style>
-        /*nav {
-            background-color: #262626;
-            height: 60px;
-            z-index: 1; //any higher integer value
-            width: 100%;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            -webkit-box-shadow: 0px 0px 8px 0px #000000;
-            -moz-box-shadow: 0px 0px 8px 0px #000000;
-            box-shadow: 0px 0px 8px 0px #000000;
-        }*/
-        .column {
-            float: left;
-            width: 30%;
-            padding: 5px;
-        }
+        
+        
 
         table,
         th,
@@ -63,7 +49,7 @@
         }
 
         img {
-            width: 500px;
+            width: 300px;
             height: 300px;
         }
 
@@ -72,12 +58,23 @@
             height: 30px;
         }
 
-        .couponContainer {
+        /*.couponContainer {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             margin-left: 30px;
             margin-bottom: 50px;
+        }*/
+
+        .couponContainerRead {
+            display: flex;
+           
+            float: left;
+           
+           margin-right: 30px;
+            
+            flex-wrap: wrap;
+            
         }
 
         .detailPhoto {
@@ -94,6 +91,13 @@
         #vaildOn::-webkit-clear-button {
             display: none;
         }
+
+       
+
+        nav{
+            clear: both;
+        }
+
     </style>
 </head>
 
