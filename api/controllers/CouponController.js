@@ -72,15 +72,41 @@ module.exports = {
     // read function
     read: async function (req, res) {
 
+        var whereClause = {};
+
+        whereClause.region = { contains: "HKI"};
+
         var limit = Math.max(2, 1) || 1;
 
+        //var o = JSON.stringify(Coupon.createdAt);
+ 
+        //var o = res.json({createdAt: Coupon.createdAt});
 
-        var Coupons = await Coupon.find({
-            //limit: limit
-            
+        var o =  {createdAt : -1};
+
+        var Coupon1 = await Coupon.find({
+            limit: limit,
+            where: whereClause,
+            sort : 'createdAt DESC'
         });
 
-        return res.view('coupon/read', { coupon: Coupons });
+        whereClause.region = { contains: "KWL"};
+
+        var Coupon2 = await Coupon.find({
+            limit: limit,
+            where: whereClause,
+            sort :  'createdAt DESC'
+        });
+
+        whereClause.region = { contains: "NT"};
+
+        var Coupon3 = await Coupon.find({
+            limit: limit,
+            where: whereClause,
+            sort :  'createdAt DESC'
+        });
+
+        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3  });
     },
 
     // detail function

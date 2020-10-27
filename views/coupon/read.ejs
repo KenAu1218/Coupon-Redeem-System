@@ -82,9 +82,7 @@
                 <div class="text-block">
                     <p>HK Island</p>
                 </div>
-                <% var count = 0; %>
-                <% coupon.forEach(function(coupon) { %>
-                <% if(coupon.region == "HKI" && count < 2) { %>
+                <% coupon1.forEach(function(coupon) { %>
                 <a href="http://localhost:1337/coupon/detail/<%= coupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= coupon.image %>" />
@@ -98,8 +96,8 @@
                     </div>
                     <br>
                 </a>
-                <% count++; %>
-                <% }}); %>
+                
+                <% }); %>
 
             </div>
         </div>
@@ -115,9 +113,9 @@
                 <div class="text-block">
                     <p>Kowloon</p>
                 </div>
-                <% var count = 0; %>
-                <% coupon.forEach(function(rubbishcoupon) { %>
-                <% if(rubbishcoupon.region == "KWL" && count < 2) { %>
+                
+                <% coupon2.forEach(function(rubbishcoupon) { %>
+                
                 <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
@@ -131,8 +129,8 @@
                     </div>
                     <br>
                     <a>
-                        <% count++; %>
-                        <% }}); %>
+                        
+                        <% }); %>
             </div>
         </div>
     </div>
@@ -149,9 +147,9 @@
                 <div class="text-block">
                     <p>New Territories</p>
                 </div>
-                <% var count = 0; %>
-                <% coupon.forEach(function(rubbishcoupon) { %>
-                <% if(rubbishcoupon.region == "NT" && count < 2) { %>
+               
+                <% coupon3.forEach(function(rubbishcoupon) { %>
+               
                 <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
@@ -165,8 +163,8 @@
                     </div>
                     <br>
                 </a>
-                <% count++; %>
-                <% }}); %>
+              
+                <% }); %>
             </div>
             <div>
             </div>
