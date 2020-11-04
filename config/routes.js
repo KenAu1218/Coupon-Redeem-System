@@ -42,6 +42,18 @@ module.exports.routes = {
 
     //'GET /coupon/searchEngine': 'CouponController.searchEngine',
 
+
+    'GET /user': 'UserController.login',
+    'GET /user/login': 'UserController.login',
+    'POST /user/login': 'UserController.login',
+    'POST /user/logout': 'UserController.logout',
+
+
+    'GET /coupon/:id/belongTo': 'CouponController.populate',
+    'GET /user/:id/have': 'UserController.populate',
+    'POST /user/:id/have/add/:fk': 'UserController.add',
+    'POST /user/:id/have/remove/:fk': 'UserController.remove',
+
     /***************************************************************************
     *                                                                          *
     * More custom routes here...                                               *

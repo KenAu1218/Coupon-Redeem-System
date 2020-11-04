@@ -233,6 +233,17 @@ module.exports = {
         }
 
 
-    }
+    },
+
+
+    populate: async function (req, res) {
+
+        var coupon = await Coupon.findOne(req.params.id).populate("belongTo");
+    
+        if (!coupon) return res.notFound();
+    
+        return res.json(coupon);
+    },
+
 };
 
