@@ -24,7 +24,7 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/search">
                         Search
                     </a>
-
+                    <% if(username && username == "admin"){ %>
                     <a class="navbar-item" href="http://localhost:1337/coupon/create">
                         Create
                     </a>
@@ -32,7 +32,7 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/admin">
                         Admin
                     </a>
-
+                    <% } %>
                 </div>
             </div>
 
@@ -40,12 +40,22 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
+                        <% if(!username){ %>
+                        <a class="button is-primary" id="signUp">
+                            <strong id="kk">Sign up</strong>
                         </a>
-                        <a class="button is-light">
+
+                        <a class="button is-light" href="http://localhost:1337/user/login">
                             Log in
                         </a>
+                        <% }else { %>
+
+                        <p>hi, <%= username %></p>
+
+                        <button class="button is-light" onclick="logout()">
+                            Log out
+                        </button>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -58,35 +68,74 @@
 
 
 
-<p><large><strong>Coupon</strong></large></p>
+<p>
+    <large><strong>Coupon</strong></large>
+</p>
 <p>Redeem your coins for dining coupons</p>
 <br>
 <br>
 
-<table class= "table is-bordered is-striped is-fullwidth">
+<table class="table is-bordered is-striped is-fullwidth">
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Restaurant</th>
-        <th></th>         
-      </tr>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Restaurant</th>
+            <th></th>
+            <th></th>
+        </tr>
 
-      <% coupon.forEach(function(rubbishcoupon) { %>
+        <% coupon.forEach(function(rubbishcoupon) { %>
 
         <tr>
             <td><%= rubbishcoupon.id %></td>
             <td><%= rubbishcoupon.title %></td>
             <td><%= rubbishcoupon.restaurant %></td>
-            <td><a href= "http://localhost:1337/coupon/update/<%=rubbishcoupon.id%>">Update<a></td>
+            <td><a href="http://localhost:1337/coupon/update/<%=rubbishcoupon.id%>">Update<a></td>
+            <td><a onclick="ShowRedeemed('<%= rubbishcoupon.id %>')">Redeemed Member<a></td>
         </tr>
-    
+
         <% }); %>
 
     </thead>
     <tbody id="TheBody">
     </tbody>
-  </table>
+</table>
+
+<script>
+    async function ShowRedeemed(id) {
+        var response = await fetch("/coupon/" + id + "/belongTo", {
+            method: "GET"
+        });
+
+        var msg = await response.json();
+        alert(msg.restaurant + " " + msg.title + "coupon belong to " + msg.belongTo.username);
+        //alert(msg.belongTo.forEach(function(hi){hi.username}));
+
+        location.reload(true);
+
+    }
+</script>
+
+
+<script>
+    async function logout() {
+
+        var response = await fetch("/user/logout", {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            alert("You have been logged out.");
+            location.assign("http://localhost:1337/coupon/read");
+        } else {
+            alert(response.statusText);
+        }
+
+    }
+
+
+</script>
 
 <!--<script>
 
@@ -108,7 +157,7 @@
 </script>-->
 
 
- <!--<script>
+<!--<script>
     
     document.addEventListener("DOMContentLoaded", function(event) { 
       var col1 = ["Full time student checking (Age 22 and under) ", "Customers over age 65", "Below  $500.00" ];

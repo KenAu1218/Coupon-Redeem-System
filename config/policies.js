@@ -21,7 +21,10 @@ module.exports.policies = {
 
 
   CouponController: {
-	create: 'isAdmin'
-}
+    create: 'isAdmin',
+    admin: 'isAdmin'
+},
+
+
 
 };

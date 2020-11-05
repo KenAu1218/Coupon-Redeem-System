@@ -66,7 +66,9 @@ module.exports = {
 
         var Coupons = await Coupon.find();
 
-        return res.view('coupon/admin', { coupon: Coupons });
+        var username = req.session.username;
+
+        return res.view('coupon/admin', { coupon: Coupons, username });
     },
 
     // read function
@@ -106,7 +108,15 @@ module.exports = {
             sort :  'createdAt DESC'
         });
 
-        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3  });
+        var username = req.session.username;
+
+        //console.log(req.session.username);
+        //if(req.session.username){
+        //console.log("req.session.username");
+        //console.log("pppp");
+        
+        //}
+        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3 , username });
     },
 
     // detail function
@@ -241,8 +251,11 @@ module.exports = {
         var coupon = await Coupon.findOne(req.params.id).populate("belongTo");
     
         if (!coupon) return res.notFound();
+
+        console.log("coupon.belongTo.username"+coupon.belongTo.username);
     
         return res.json(coupon);
+        //return res.status(201).send();
     },
 
 };

@@ -23,13 +23,14 @@ module.exports = {
 
         // Reuse existing session 
         if (!req.session.username) {
+            console.log("hi1");
             req.session.username = user.username;
             return res.json(user);
         }
 
         // Start a new session for the new login user
         req.session.regenerate(function (err) {
-
+            console.log("hi2");
             if (err) return res.serverError(err);
 
             req.session.username = user.username;
@@ -43,8 +44,10 @@ module.exports = {
 
             if (err) return res.serverError(err);
 
-            return res.json(req.session.id);
+            return res.json();
         });
+
+      
     },
 
     populate: async function (req, res) {
@@ -69,7 +72,9 @@ module.exports = {
         
         await User.addToCollection(req.params.id, "have").members(req.params.fk);
     
-        return res.ok();
+        //return res.ok();
+
+        return res.status(204).send();
     },
 
     remove: async function (req, res) {

@@ -24,15 +24,15 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/search">
                         Search
                     </a>
-
+                    <% if(username && username == "admin"){ %>
                     <a class="navbar-item" href="http://localhost:1337/coupon/create">
                         Create
                     </a>
-
+                    
                     <a class="navbar-item" href="http://localhost:1337/coupon/admin">
                         Admin
                     </a>
-
+                    <% } %>
                 </div>
             </div>
 
@@ -40,12 +40,23 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
+
+                        <% if(!username){ %>
+                        <a class="button is-primary" id="signUp">
+                            <strong id="kk">Sign up</strong>
                         </a>
-                        <a class="button is-light">
+
+                        <a class="button is-light" href="http://localhost:1337/user/login">
                             Log in
                         </a>
+                        <% }else { %>
+
+                        <p>hi, <%= username %></p>
+                        
+                        <button class="button is-light" onclick="logout()">
+                            Log out
+                        </button>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -96,7 +107,7 @@
                     </div>
                     <br>
                 </a>
-                
+
                 <% }); %>
 
             </div>
@@ -113,9 +124,9 @@
                 <div class="text-block">
                     <p>Kowloon</p>
                 </div>
-                
+
                 <% coupon2.forEach(function(rubbishcoupon) { %>
-                
+
                 <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
@@ -129,7 +140,7 @@
                     </div>
                     <br>
                     <a>
-                        
+
                         <% }); %>
             </div>
         </div>
@@ -147,9 +158,9 @@
                 <div class="text-block">
                     <p>New Territories</p>
                 </div>
-               
+
                 <% coupon3.forEach(function(rubbishcoupon) { %>
-               
+
                 <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
@@ -163,13 +174,33 @@
                     </div>
                     <br>
                 </a>
-              
+
                 <% }); %>
             </div>
             <div>
             </div>
 
 </section>
+
+
+<script>
+    async function logout(){
+
+        var response = await fetch("/user/logout", {
+            method: "POST",
+        });
+
+        if(response.ok){
+            alert("You have been logged out." );
+            location.assign("http://localhost:1337/coupon/read");
+        } else {
+            alert(response.statusText);
+        }
+
+    }
+
+
+</script>
 
 
 <!--<script>

@@ -21,4 +21,47 @@
             <li><%= coupon.detail %></li>
         </ul>
     </div>
+
+
+    
+    <div class="field">
+        <div class="control">
+            <button class="button is-link " type="submit" onclick="redeem('<%= coupon %>', '<%= user %>' )">Redeem</button>
+        </div>
+    </div>
+
 </section>
+
+
+<!--<script>
+    if(user.role = "admin" || "member"){
+        Redeem.button
+    }
+
+</script>-->
+
+
+<script>
+    async function redeem(coupon, user) {
+        var r = confirm("Confirm Redeem?");
+        
+        if (r) {
+            if(user.coin >= coupon.coin && coupon.quota > 0){
+
+            var response = await fetch("/user/"+ user.id + "/have/add/" + coupon.id, {
+                method: "POST"
+            });
+
+            if (response.ok) {
+                coupon.qouta = coupon.quota - 1;
+                alert("The coupon has been redeemed.");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+        }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>

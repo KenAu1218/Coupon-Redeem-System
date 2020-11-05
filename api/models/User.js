@@ -7,40 +7,48 @@
 
 module.exports = {
 
-  attributes: {
+    attributes: {
 
-    //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
-    //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
-    //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+        //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
+        //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
+        //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
-    username: {
-        type: "string"
-      },
-      
-      password: {
-        type: "string"
-      },
+        username: {
+            type: "string",
+            unique: true,
+            required: true
+        },
 
-    //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
-    //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
-    //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+        password: {
+            type: "string"
+        },
+
+        role: {
+            type: 'string',
+            isIn: ['admin', 'member', 'non-member'],
+            defaultsTo: 'non-member'
+          },
+
+        //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
+        //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
+        //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
 
 
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
+        //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+        //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
+        //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-    have: {
-        collection: 'Coupon',
-        via: 'belongTo'
-      }
+        have: {
+            collection: 'Coupon',
+            via: 'belongTo'
+        }
 
-  },
+    },
 
-  customToJSON: function() {
-	// Return a shallow copy of this record with the password removed.
-	return _.omit(this, ['password'])
-},
+    customToJSON: function () {
+        // Return a shallow copy of this record with the password removed.
+        return _.omit(this, ['password'])
+    },
 
 };
 
