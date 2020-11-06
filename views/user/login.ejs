@@ -37,7 +37,6 @@
             var user = await response.json();
             alert("Welcome back, " + user.username);
 
-
             location.assign("http://localhost:1337/coupon/read");
 
         } else if (response.status == 401) {

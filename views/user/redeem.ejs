@@ -24,25 +24,23 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/search">
                         Search
                     </a>
-
                     <% if(user.username){ %>
-                        <a class="navbar-item" href="http://localhost:1337/user/redeem">
-                            My Redeemed Coupons
-                        </a>
+                    <a class="navbar-item" href="http://localhost:1337/user/redeem">
+                        My Redeemed Coupons
+                    </a>
                     <% } %>
-                    
+
                     <% if(user.username && user.role == "admin"){ %>
                     <a class="navbar-item" href="http://localhost:1337/coupon/create">
                         Create
                     </a>
-                    
+
                     <a class="navbar-item" href="http://localhost:1337/coupon/admin">
                         Admin
                     </a>
                     <% } %>
                 </div>
             </div>
-
 
             <div class="navbar-end">
                 <div class="navbar-item">
@@ -59,7 +57,7 @@
                         <% }else { %>
 
                         <p>hi, <%= user.username %></p>
-                        
+
                         <button class="button is-light" onclick="logout()">
                             Log out
                         </button>
@@ -71,9 +69,6 @@
         </nav>
     </div>
 </section>
-
-
-
 
 <hr>
 <Section>
@@ -88,8 +83,20 @@
 
 
 <section>
+    <div id = "redeemInfo">
+    <div>
+        <p>Redeemed Coupons:</p>
+    </div>
+
+    <div >
+        <p>Current Balance : <%= user.coin %></p>
+    </div>
+    </div>
+</section>
 
 
+<section>
+    <% user.have.forEach(function(coupon) { %>
     <div class="couponContainerRead">
 
         <div class="columns  is-mobile is-multiline is-vcentered">
@@ -97,10 +104,8 @@
 
             <div class="column is-mobile">
 
-                <div class="text-block">
-                    <p>HK Island</p>
-                </div>
-                <% coupon1.forEach(function(coupon) { %>
+                
+
                 <a href="http://localhost:1337/coupon/detail/<%= coupon.id %>">
                     <figure>
                         <img style="object-fit:cover" src="<%= coupon.image %>" />
@@ -110,95 +115,37 @@
                         <p><strong><%= coupon.restaurant %></strong></p>
                         <p><%= coupon.title %></p>
                         <br>
-                        <p>Coind: <%= coupon.coin %></p>
+                        <p>Expiry Date: <%= coupon.expireDate %></p>
                     </div>
                     <br>
                 </a>
 
-                <% }); %>
+
 
             </div>
         </div>
     </div>
-    <!--<br>
-    <br>-->
 
-    <div class="couponContainerRead ">
-
-        <div class="columns  is-mobile is-multiline is-vcentered">
-
-            <div class="column  is-mobile ">
-                <div class="text-block">
-                    <p>Kowloon</p>
-                </div>
-
-                <% coupon2.forEach(function(rubbishcoupon) { %>
-
-                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
-                    <figure>
-                        <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
-                    </figure>
-
-                    <div class="text-block">
-                        <p><strong><%= rubbishcoupon.restaurant %></strong></p>
-                        <p><%= rubbishcoupon.title %></p>
-                        <br>
-                        <p>Coind: <%= rubbishcoupon.coin %></p>
-                    </div>
-                    <br>
-                    <a>
-
-                        <% }); %>
-            </div>
-        </div>
-    </div>
-
-    <!--<br>
-    <br>-->
-
-    <div class="couponContainerRead ">
-
-        <div class="columns  is-mobile is-multiline is-vcentered">
-
-
-            <div class="column is-mobile">
-                <div class="text-block">
-                    <p>New Territories</p>
-                </div>
-
-                <% coupon3.forEach(function(rubbishcoupon) { %>
-
-                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
-                    <figure>
-                        <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
-                    </figure>
-
-                    <div class="text-block">
-                        <p><strong><%= rubbishcoupon.restaurant %></strong></p>
-                        <p><%= rubbishcoupon.title %></p>
-                        <br>
-                        <p>Coind: <%= rubbishcoupon.coin %></p>
-                    </div>
-                    <br>
-                </a>
-
-                <% }); %>
-            </div>
-            <div>
-            </div>
+    <% }); %>
 
 </section>
 
 
+
+
+
+
+
+
 <script>
-    async function logout(){
+    async function logout() {
 
         var response = await fetch("/user/logout", {
             method: "POST",
         });
 
-        if(response.ok){
-            alert("You have been logged out." );
+        if (response.ok) {
+            alert("You have been logged out.");
             location.assign("http://localhost:1337/coupon/read");
         } else {
             alert(response.statusText);
@@ -206,20 +153,4 @@
 
     }
 
-
 </script>
-
-
-<!--<script>
-
-
-
-       var op =  document.getElementById("3");
-
-       op.innerHTML = rubbishcoupon.title;
-
-
-    });
-
-
-</script>-->

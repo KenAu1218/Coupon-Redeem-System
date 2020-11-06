@@ -24,7 +24,12 @@ module.exports = {
         // Reuse existing session 
         if (!req.session.username) {
             console.log("hi1");
+            console.log(user.id);
             req.session.username = user.username;
+            req.session.userid = user.id;              // req.session.id is different it mean the id of this session
+            req.session.coin = user.coin;
+            req.session.role = user.role;
+            
             return res.json(user);
         }
 
@@ -34,6 +39,9 @@ module.exports = {
             if (err) return res.serverError(err);
 
             req.session.username = user.username;
+            req.session.id = user.id;
+            req.session.coin = user.coin;
+            req.session.role = user.role;
             return res.json(user);
         });
     },
@@ -70,7 +78,7 @@ module.exports = {
         if (thatCoupon.belongTo.length > 0)
             return res.status(409).json("Already added.");   // conflict
         
-        await User.addToCollection(req.params.id, "have").members(req.params.fk);
+            await User.addToCollection(req.params.id, "have").members(req.params.fk);
     
         //return res.ok();
 
@@ -92,6 +100,17 @@ module.exports = {
     
         return res.ok();
     },
+
+
+    redeem: async function(req, res){
+
+        var user = await User.findOne(req.session.userid).populate("have");
+    
+        if (!user) return res.notFound();
+    
+        //return res.json(user);
+        return res.view('user/redeem',{ user: user });
+    }
 
 };
 

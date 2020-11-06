@@ -21,6 +21,18 @@ module.exports = {
     // action - update
     update: async function (req, res) {
 
+        if(res.wantsJason){
+
+            var updatedCoupon = await Coupon.updateOne(req.params.id).set(req.body.quota = req.body.quota-1);
+
+            if (!updatedCoupon) return res.notFound();
+
+            return res.ok();
+
+
+        }
+
+
         if (req.method == "GET") {
 
             var thatCoupon = await Coupon.findOne(req.params.id);
@@ -66,9 +78,20 @@ module.exports = {
 
         var Coupons = await Coupon.find();
 
-        var username = req.session.username;
+        var userInfo = {};
 
-        return res.view('coupon/admin', { coupon: Coupons, username });
+        userInfo.username = req.session.username;
+
+        userInfo.userid = req.session.userid;
+
+        userInfo.coin = req.session.coin;
+
+        userInfo.role = req.session.role;
+
+        console.log(userInfo.userid);
+
+
+        return res.view('coupon/admin', { coupon: Coupons, user: userInfo });
     },
 
     // read function
@@ -108,7 +131,15 @@ module.exports = {
             sort :  'createdAt DESC'
         });
 
-        var username = req.session.username;
+        var userInfo = {};
+
+        userInfo.username = req.session.username;
+
+        userInfo.userid = req.session.userid;
+
+        userInfo.coin = req.session.coin;
+
+        userInfo.role = req.session.role;
 
         //console.log(req.session.username);
         //if(req.session.username){
@@ -116,7 +147,7 @@ module.exports = {
         //console.log("pppp");
         
         //}
-        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3 , username });
+        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3 , user: userInfo });
     },
 
     // detail function
@@ -126,7 +157,19 @@ module.exports = {
 
         if (!thatCoupon) return res.notFound();
 
-        return res.view('coupon/detail', { coupon: thatCoupon });
+        var userInfo = {};
+
+        userInfo.username = req.session.username;
+
+        userInfo.userid = req.session.userid;
+
+        userInfo.coin = req.session.coin;
+
+        userInfo.role = req.session.role;
+
+        console.log("detail:"+userInfo.userid);
+
+        return res.view('coupon/detail', { coupon: thatCoupon, user: userInfo });
 
 
     },
@@ -252,10 +295,8 @@ module.exports = {
     
         if (!coupon) return res.notFound();
 
-        console.log("coupon.belongTo.username"+coupon.belongTo.username);
-    
         return res.json(coupon);
-        //return res.status(201).send();
+        
     },
 
 };

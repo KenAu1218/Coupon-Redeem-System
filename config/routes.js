@@ -33,6 +33,7 @@ module.exports.routes = {
 
     'GET /coupon/update/:id': 'CouponController.update',
     'POST /coupon/update/:id': 'CouponController.update',
+    'PUT /coupon/:id': 'CouponController.update',
 
     'GET /coupon/admin': 'CouponController.admin',
 
@@ -53,6 +54,9 @@ module.exports.routes = {
     'GET /user/:id/have': 'UserController.populate',
     'POST /user/:id/have/add/:fk': 'UserController.add',
     'POST /user/:id/have/remove/:fk': 'UserController.remove',
+
+
+    'GET /user/redeem': 'UserController.redeem',
 
     /***************************************************************************
     *                                                                          *

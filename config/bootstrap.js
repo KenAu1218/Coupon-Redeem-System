@@ -64,10 +64,10 @@ module.exports.bootstrap = async function () {
         var hash3 = await sails.bcrypt.hash('9990', salt);
 
         await User.createEach([
-            { username: "admin", password: hash1, role: "admin"},
-            { username: "Ken", password: hash2, role: "member"},
-            { username: "Paula", password: hash3, role: "member" },
-            { username: "JohnsonBaby", password: hash3 },
+            { username: "admin", password: hash1, role: "admin", coin: 500},
+            { username: "Ken", password: hash2, role: "member", coin: 500},
+            { username: "Paula", password: hash3, role: "member", coin: 500},
+            { username: "JohnsonBaby", password: hash3 ,coin: 500},
             // etc.
         ]);
 

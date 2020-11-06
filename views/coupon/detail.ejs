@@ -22,14 +22,14 @@
         </ul>
     </div>
 
-
+    <% if(user.userid){ %>
     
     <div class="field">
         <div class="control">
-            <button class="button is-link " type="submit" onclick="redeem('<%= coupon %>', '<%= user %>' )">Redeem</button>
+            <button class="button is-link " id = "redeem" type="submit" onclick="redeem('<%= coupon.id %>', '<%= user.userid %>', '<%= coupon.coin %>', '<%= user.coin %>', '<%= coupon.quota %>' )">Redeem</button>
         </div>
     </div>
-
+  <% } %>
 </section>
 
 
@@ -42,18 +42,29 @@
 
 
 <script>
-    async function redeem(coupon, user) {
+    async function redeem(couponid, userid, couponcoin, usercoin, couponquota) {
+        
+
         var r = confirm("Confirm Redeem?");
         
         if (r) {
-            if(user.coin >= coupon.coin && coupon.quota > 0){
+            if(usercoin >= couponcoin && couponquota > 0){
 
-            var response = await fetch("/user/"+ user.id + "/have/add/" + coupon.id, {
+            var response = await fetch("/user/"+ userid + "/have/add/" + couponid, {
                 method: "POST"
             });
 
             if (response.ok) {
-                coupon.qouta = coupon.quota - 1;
+
+                var x = document.getElementById("redeem");
+                x.style.display = "none";
+
+                usercoin = usercoin - couponcoin;
+                couponqouta = couponquota - 1;
+
+                var response = await fetch("/coupon/"+ couponid, {
+                method: "PUT"
+            });
                 alert("The coupon has been redeemed.");
             } else {
                 alert(response.status + ": " + response.statusText);

@@ -24,7 +24,7 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/search">
                         Search
                     </a>
-                    <% if(username && username == "admin"){ %>
+                    <% if(user.username && user.role == "admin"){ %>
                     <a class="navbar-item" href="http://localhost:1337/coupon/create">
                         Create
                     </a>
@@ -40,7 +40,7 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <% if(!username){ %>
+                        <% if(!user.username){ %>
                         <a class="button is-primary" id="signUp">
                             <strong id="kk">Sign up</strong>
                         </a>
@@ -50,7 +50,7 @@
                         </a>
                         <% }else { %>
 
-                        <p>hi, <%= username %></p>
+                        <p>hi, <%= user.username %></p>
 
                         <button class="button is-light" onclick="logout()">
                             Log out
@@ -109,10 +109,14 @@
         });
 
         var msg = await response.json();
-        alert(msg.restaurant + " " + msg.title + "coupon belong to " + msg.belongTo.username);
-        //alert(msg.belongTo.forEach(function(hi){hi.username}));
 
-        location.reload(true);
+        msg.belongTo.forEach( function (u) {
+            //console.log("u.username"+ u.username);
+            alert("user id: "+u.id+ " username: " +  u.username );
+        });
+
+       
+        
 
     }
 </script>
