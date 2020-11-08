@@ -22,54 +22,107 @@
         </ul>
     </div>
 
-    <% if(user.userid){ %>
-    
-    <div class="field">
-        <div class="control">
-            <button class="button is-link " id = "redeem" type="submit" onclick="redeem('<%= coupon.id %>', '<%= user.userid %>', '<%= coupon.coin %>', '<%= user.coin %>', '<%= coupon.quota %>' )">Redeem</button>
-        </div>
-    </div>
-  <% } %>
 </section>
 
+<section>
+    <div>
+        <ul class="a"><li><strong>Quota: <%= coupon.quota %></strong></li></ul></div>
 
-<!--<script>
-    if(user.role = "admin" || "member"){
-        Redeem.button
-    }
+</section>
 
-</script>-->
+<% if(user.userid){ %>
+<section>
+    
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link " id="redeem" type="submit"
+                onclick="redeem('<%= coupon.id %>', '<%= user.userid %>', '<%= coupon.coin %>', '<%= user.coin %>', '<%= coupon.quota %>' )">Redeem</button>
+        </div>
+    </div>
+   
+</section>
+ <% } %>
 
 
 <script>
+
+
+
+    async function codeAddress() {
+
+        console.log("<%= user.coin %>");
+
+        var response = await fetch("/user/<%= user.userid %>/coupon/<%= coupon.id %>", {
+            method: "GET"
+        });
+
+        if (!response.ok) {
+            var x = document.getElementById("redeem");
+            x.style.display = "none";
+
+
+        }
+
+
+    }
+
+    window.onload = codeAddress;
+
+</script>
+
+
+
+
+<script>
+
     async function redeem(couponid, userid, couponcoin, usercoin, couponquota) {
-        
+
 
         var r = confirm("Confirm Redeem?");
-        
+
         if (r) {
-            if(usercoin >= couponcoin && couponquota > 0){
-
-            var response = await fetch("/user/"+ userid + "/have/add/" + couponid, {
-                method: "POST"
-            });
-
-            if (response.ok) {
-
-                var x = document.getElementById("redeem");
-                x.style.display = "none";
-
-                usercoin = usercoin - couponcoin;
-                couponqouta = couponquota - 1;
-
-                var response = await fetch("/coupon/"+ couponid, {
-                method: "PUT"
-            });
-                alert("The coupon has been redeemed.");
-            } else {
-                alert(response.status + ": " + response.statusText);
+            if(usercoin >= couponcoin){
+                console.log("u"+usercoin);
+                console.log("c"+couponcoin);
+                console.log("hh");
             }
-        }
+            if (usercoin >= couponcoin && couponquota > 0) {
+
+                var response = await fetch("/user/" + userid + "/have/add/" + couponid, {
+                    method: "POST"
+                });
+
+                if (response.ok) {
+
+
+
+                    usercoin = usercoin - couponcoin;
+
+
+                    var response = await fetch("/coupon/" + couponid, {
+                        method: "PUT"
+                    });
+
+
+                    var response = await fetch("/user/" + userid + "/coin/" + couponcoin, {
+                        method: "PUT"
+                    });
+
+                    alert("The coupon has been redeemed.");
+
+                    location.reload();
+                } else {
+                    alert(response.status + ": " + response.statusText);
+                }
+
+
+            } else if (couponquota == 0) {
+                alert("The quota is zero.");
+            } else {
+                alert("You don't have enough coin to redeem.");
+            }
+
 
         } else {
             alert("cancelled");

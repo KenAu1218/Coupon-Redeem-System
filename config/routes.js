@@ -58,6 +58,10 @@ module.exports.routes = {
 
     'GET /user/redeem': 'UserController.redeem',
 
+    'PUT /user/:id/coin/:coin': 'UserController.update',
+
+    'GET /user/:id/coupon/:fk' : 'UserController.check',
+
     /***************************************************************************
     *                                                                          *
     * More custom routes here...                                               *

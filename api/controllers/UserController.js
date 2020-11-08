@@ -60,6 +60,7 @@ module.exports = {
 
     populate: async function (req, res) {
 
+
         var user = await User.findOne(req.params.id).populate("have");
     
         if (!user) return res.notFound();
@@ -110,7 +111,68 @@ module.exports = {
     
         //return res.json(user);
         return res.view('user/redeem',{ user: user });
-    }
+    },
+
+    update: async function (req, res) {
+        
+        if(req.wantsJSON){
+
+            var u = await User.findOne(req.params.id);
+
+            var c = req.params.coin;
+
+            //console.log("c"+ c);
+
+            var l = u.coin - c; 
+
+            req.session.coin = l;
+
+            var updatedCoupon = await User.updateOne(req.params.id).set({coin: l});
+
+
+            if (!updatedCoupon) return res.notFound();
+
+            return res.ok();
+
+        }
+
+
+        if (req.method == "GET") {
+
+            var thatCoupon = await Coupon.findOne(req.params.id);
+
+            if (!thatCoupon) return res.notFound();
+
+            return res.view('coupon/update', { coupon: thatCoupon });
+
+
+        } else {
+
+            var updatedCoupon = await Coupon.updateOne(req.params.id).set(req.body);
+
+            if (!updatedCoupon) return res.notFound();
+
+            return res.ok();
+        }
+    },
+
+
+    check: async function (req, res) {
+
+        if(req.wantsJSON){
+        if (!await User.findOne(req.params.id)) return res.status(404).json("User not found.");
+        
+        var thatCoupon = await Coupon.findOne(req.params.fk).populate("belongTo", {id: req.params.id});
+    
+        if (!thatCoupon) return res.status(404).json("Coupon not found.");
+            
+        if (thatCoupon.belongTo.length > 0)
+            return res.status(409).json("Already added.");   // conflict
+        
+          
+        return res.status(204).send();
+        }
+    },
 
 };
 

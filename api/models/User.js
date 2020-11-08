@@ -23,11 +23,17 @@ module.exports = {
             type: "string"
         },
 
+    
+
         role: {
             type: 'string',
             isIn: ['admin', 'member', 'non-member'],
             defaultsTo: 'non-member'
-          },
+        },
+
+        coin: {
+            type: "integer"
+        },
 
         //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
         //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

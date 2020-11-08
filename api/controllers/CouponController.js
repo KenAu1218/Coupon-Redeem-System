@@ -21,14 +21,24 @@ module.exports = {
     // action - update
     update: async function (req, res) {
 
-        if(res.wantsJason){
 
-            var updatedCoupon = await Coupon.updateOne(req.params.id).set(req.body.quota = req.body.quota-1);
+        
+        
+        if(req.wantsJSON){
+
+            var q = await Coupon.findOne(req.params.id);
+
+
+            var l = q.quota -1; 
+
+            
+            var updatedCoupon = await Coupon.updateOne(req.params.id).set({quota: l});
+
+        
 
             if (!updatedCoupon) return res.notFound();
 
             return res.ok();
-
 
         }
 
