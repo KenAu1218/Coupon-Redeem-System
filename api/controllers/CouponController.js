@@ -22,19 +22,19 @@ module.exports = {
     update: async function (req, res) {
 
 
-        
-        
-        if(req.wantsJSON){
+
+
+        if (req.wantsJSON) {
 
             var q = await Coupon.findOne(req.params.id);
 
 
-            var l = q.quota -1; 
+            var l = q.quota - 1;
 
-            
-            var updatedCoupon = await Coupon.updateOne(req.params.id).set({quota: l});
 
-        
+            var updatedCoupon = await Coupon.updateOne(req.params.id).set({ quota: l });
+
+
 
             if (!updatedCoupon) return res.notFound();
 
@@ -109,36 +109,36 @@ module.exports = {
 
         var whereClause = {};
 
-        whereClause.region = { contains: "HKI"};
+        whereClause.region = { contains: "HKI" };
 
         var limit = Math.max(2, 1) || 1;
 
         //var o = JSON.stringify(Coupon.createdAt);
- 
+
         //var o = res.json({createdAt: Coupon.createdAt});
 
-        var o =  {createdAt : -1};
+        var o = { createdAt: -1 };
 
         var Coupon1 = await Coupon.find({
             limit: limit,
             where: whereClause,
-            sort : 'createdAt DESC'
+            sort: 'createdAt DESC'
         });
 
-        whereClause.region = { contains: "KWL"};
+        whereClause.region = { contains: "KWL" };
 
         var Coupon2 = await Coupon.find({
             limit: limit,
             where: whereClause,
-            sort :  'createdAt DESC'
+            sort: 'createdAt DESC'
         });
 
-        whereClause.region = { contains: "NT"};
+        whereClause.region = { contains: "NT" };
 
         var Coupon3 = await Coupon.find({
             limit: limit,
             where: whereClause,
-            sort :  'createdAt DESC'
+            sort: 'createdAt DESC'
         });
 
         var userInfo = {};
@@ -155,9 +155,9 @@ module.exports = {
         //if(req.session.username){
         //console.log("req.session.username");
         //console.log("pppp");
-        
+
         //}
-        return res.view('coupon/read', { coupon1: Coupon1,coupon2: Coupon2, coupon3: Coupon3 , user: userInfo });
+        return res.view('coupon/read', { coupon1: Coupon1, coupon2: Coupon2, coupon3: Coupon3, user: userInfo });
     },
 
     // detail function
@@ -177,7 +177,7 @@ module.exports = {
 
         userInfo.role = req.session.role;
 
-        console.log("detail:"+userInfo.userid);
+        console.log("detail:" + userInfo.userid);
 
         return res.view('coupon/detail', { coupon: thatCoupon, user: userInfo });
 
@@ -201,65 +201,68 @@ module.exports = {
     //},
 
     search: async function (req, res) {
-        
-        var d = new Date("10/19/2020");
 
-        var k = new Date("10/21/2020");
 
-        if(d <= k){
-            console.log( "yes");
-     }
 
-        console.log("DD: "+ d.toDateString());
 
+
+        var userInfo = {};
+
+        userInfo.username = req.session.username;
+
+        userInfo.userid = req.session.userid;
+
+        userInfo.coin = req.session.coin;
+
+        userInfo.role = req.session.role;
 
 
         var whereClause = {};
 
         if (req.query.region || req.query.minCoin || req.query.maxCoin || req.query.vaildOn) {
 
-            if(req.query.region)
-            whereClause.region = { contains: req.query.region };
+            
+
+            if (req.query.region)
+                whereClause.region = { contains: req.query.region };
 
             //if (req.query.minCoin) {
-                
+
             //    console.log("req.query.minCoin" + typeof req.query.minCoin);
             //    console.log("req.query.maxCoin" + typeof req.query.maxCoin);
             //}
 
-           
-
             //var dd = new Date();
 
-            if(req.query.vaildOn){
+            if (req.query.vaildOn) {
 
-                whereClause.expireDate = {'>=': req.query.vaildOn};
-            }else{
+                whereClause.expireDate = { '>=': req.query.vaildOn };
+            } else {
                 console.log("no date");
             }
 
 
             var min = 0;
             var max = 0;
-            if(req.query.minCoin){
+            if (req.query.minCoin) {
                 min = parseInt(req.query.minCoin);
             }
 
-            if(req.query.maxCoin){
+            if (req.query.maxCoin) {
                 max = parseInt(req.query.maxCoin);
             }
 
-            if(min == 0 && max == 0  ){
-            
-            }else if (max == 0 && min != 0){
+            if (min == 0 && max == 0) {
 
-                whereClause.coin = {'>=': min};
-                
+            } else if (max == 0 && min != 0) {
+
+                whereClause.coin = { '>=': min };
+
             } else {
-                whereClause.coin = {'>=': min, '<=': max}; // req.query.minCoin is string type
+                whereClause.coin = { '>=': min, '<=': max }; // req.query.minCoin is string type
             }
 
-           
+
 
             var limit = Math.max(2, 1) || 1;
             var offset = Math.max(req.query.offset, 0) || 0;
@@ -277,21 +280,30 @@ module.exports = {
             });
 
 
-            return res.view('coupon/search', { coupon: thoseCoupons, numOfRecords: j.length });
+            return res.view('coupon/search', { coupon: thoseCoupons, numOfRecords: j.length, user: userInfo });
 
         } else {
 
-            var limit = Math.max(2, 1) || 1;
-            var offset = Math.max(req.query.offset, 0) || 0;
+            if (req.wantsJSON) {
+                var limit = Math.max(req.query.limit, 1) || 1;
+                var offset = Math.max(req.query.offset, 0) || 0;
 
-            var someCoupons = await Coupon.find({
-                limit: limit,
-                skip: offset
-            });
+                var someCoupons = await Coupon.find({
+                    limit: limit,
+                    skip: offset
+                });
 
-            var count = await Coupon.count();
+                return res.json(someCoupons);
 
-            return res.view('coupon/search', { coupon: someCoupons, numOfRecords: count });
+            } else {
+                var count = await Coupon.count();
+
+                return res.view('coupon/search', {  numOfRecords: count, user: userInfo });
+            }
+
+
+
+
 
         }
 
@@ -302,11 +314,11 @@ module.exports = {
     populate: async function (req, res) {
 
         var coupon = await Coupon.findOne(req.params.id).populate("belongTo");
-    
+
         if (!coupon) return res.notFound();
 
         return res.json(coupon);
-        
+
     },
 
 };

@@ -1,5 +1,79 @@
 <section>
     <div class="container">
+        <nav class="navbar navbar-default navbar-static-top is-full" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item">
+                    <img src="https://dynamic.brandcrowd.com/asset/logo/99cb1360-acee-42a6-b0d7-d89aa74e8874/logo?v=4"
+                        class="logoCoupon">
+                </a>
+
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="http://localhost:1337/coupon">
+                        Home
+                    </a>
+
+                    <a class="navbar-item" href="http://localhost:1337/coupon/search">
+                        Search
+                    </a>
+
+                    <% if(user.username){ %>
+                    <a class="navbar-item" href="http://localhost:1337/user/redeem">
+                        My Redeemed Coupons
+                    </a>
+                    <% } %>
+
+                    <% if(user.username && user.role == "admin"){ %>
+                    <a class="navbar-item" href="http://localhost:1337/coupon/create">
+                        Create
+                    </a>
+
+                    <a class="navbar-item" href="http://localhost:1337/coupon/admin">
+                        Admin
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+
+                        <% if(!user.username){ %>
+                        <a class="button is-primary" id="signUp">
+                            <strong id="kk">Sign up</strong>
+                        </a>
+
+                        <a class="button is-light" href="http://localhost:1337/user/login">
+                            Log in
+                        </a>
+                        <% }else { %>
+
+                        <p>hi, <%= user.username %></p>
+
+                        <button class="button is-light" onclick="logout()">
+                            Log out
+                        </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+    </div>
+</section>
+
+<section>
+    <div class="container">
         <figure>
             <img class="detailPhoto" src="<%= coupon.image %>" />
         </figure>
@@ -26,13 +100,16 @@
 
 <section>
     <div>
-        <ul class="a"><li><strong>Quota: <%= coupon.quota %></strong></li></ul></div>
+        <ul class="a">
+            <li><strong>Quota: <%= coupon.quota %></strong></li>
+        </ul>
+    </div>
 
 </section>
 
 <% if(user.userid){ %>
 <section>
-    
+
 
     <div class="field">
         <div class="control">
@@ -40,9 +117,9 @@
                 onclick="redeem('<%= coupon.id %>', '<%= user.userid %>', '<%= coupon.coin %>', '<%= user.coin %>', '<%= coupon.quota %>' )">Redeem</button>
         </div>
     </div>
-   
+
 </section>
- <% } %>
+<% } %>
 
 
 <script>
@@ -82,9 +159,9 @@
         var r = confirm("Confirm Redeem?");
 
         if (r) {
-            if(usercoin >= couponcoin){
-                console.log("u"+usercoin);
-                console.log("c"+couponcoin);
+            if (usercoin >= couponcoin) {
+                console.log("u" + usercoin);
+                console.log("c" + couponcoin);
                 console.log("hh");
             }
             if (usercoin >= couponcoin && couponquota > 0) {
@@ -128,4 +205,24 @@
             alert("cancelled");
         }
     };
+</script>
+
+
+<script>
+    async function logout() {
+
+        var response = await fetch("/user/logout", {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            alert("You have been logged out.");
+            location.assign("http://localhost:1337/coupon/read");
+        } else {
+            alert(response.statusText);
+        }
+
+    }
+
+
 </script>

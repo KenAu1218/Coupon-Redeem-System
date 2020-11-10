@@ -27,6 +27,13 @@
                         Search
                     </a>
 
+                    <% if(user.username){ %>
+                    <a class="navbar-item" href="http://localhost:1337/user/redeem">
+                        My Redeemed Coupons
+                    </a>
+                    <% } %>
+
+                    <% if(user.username && user.role == "admin"){ %>
                     <a class="navbar-item" href="http://localhost:1337/coupon/create">
                         Create
                     </a>
@@ -34,6 +41,7 @@
                     <a class="navbar-item" href="http://localhost:1337/coupon/admin">
                         Admin
                     </a>
+                    <% } %>
 
                 </div>
             </div>
@@ -42,12 +50,22 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
+                        <% if(!user.username){ %>
+                        <a class="button is-primary" id="signUp">
+                            <strong id="kk">Sign up</strong>
                         </a>
-                        <a class="button is-light">
+
+                        <a class="button is-light" href="http://localhost:1337/user/login">
                             Log in
                         </a>
+                        <% }else { %>
+
+                        <p>hi, <%= user.username %></p>
+
+                        <button class="button is-light" onclick="logout()">
+                            Log out
+                        </button>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -71,67 +89,20 @@
 
 <section>
 
-    <% var count = 0; %>
-    <% coupon.forEach( function(rubbishcoupon) { %>
-    <div class="couponContainerRead">
-
-        <div class="columns is-mobile is-multiline is-vcentered">
+    <div id="search"></div>
 
 
-            <div class="column is-mobile">
-
-                <a href="http://localhost:1337/coupon/detail/<%= rubbishcoupon.id %>">
-                    <figure>
-                        <img style="object-fit:cover" src="<%= rubbishcoupon.image %>" />
-                    </figure>
-
-                    <div class="text-block">
-                        <p><strong><%= rubbishcoupon.restaurant %></strong></p>
-                        <p><%= rubbishcoupon.title %></p>
-                        <br>
-                        <p>Coind: <%= rubbishcoupon.coin %></p>
-                    </div>
-                    <br>
-                </a>
-
-            </div>
-        </div>
-    </div>
-    <% ++count; %>
-    <% }); %>
-
-
-    <% if(count == 1 ){ %>
-
-    <div class="container" style="margin-right: 60px;">
-
-
-    </div>
-
-
-
-    <% } else if(count == 0 ){ %>
-
-    <div class="container" style="margin-right: 350px; margin-left: 50px;">
-        <p>No Coupons found</p>
-
-    </div>
-
-    <div class="container" style="margin-right: 100px;">
-
-
-    </div>
-
-    <% } %>
 
     <!--<div class="couponContainerRead" >-->
 
     <div class="columns is-mobile is-multiline is-vcentered">
 
 
-        <div class="column is-mobile">                  <!--can't perform without this-->
+        <div class="column is-mobile">
+            <!--can't perform without this-->
 
-            <form action="/coupon/search" method="GET">   <!--can't perform without this-->
+            <form action="/coupon/search" method="GET">
+                <!--can't perform without this-->
 
                 <div class="field">
                     <label class="label">Region</label>
@@ -192,39 +163,41 @@
         <section>
             <div class="container">
                 <nav class="pagination" role="navigation" aria-label="pagination">
-                    <a class="pagination-previous" id="previousButton">Previous</a>
-                    <a class="pagination-next" id="nextButton">Next page</a>
+                    <button class="pagination-previous" id="previousButton" >Previous</button>
+                    <button class="pagination-next" id="nextButton" >Next page</button>
                     <ul class="pagination-list">
                         <li>
-                            <a class="pagination-link" id="firstLink">1</a>
+                            <a class="pagination-link" id="firstLink" >1</a>
                         </li>
                         <li>
                             <span class="pagination-ellipsis">&hellip;</span>
                         </li>
                         <li>
-                            <a class="pagination-link" id="previousLink">45</a>
+                            <a class="pagination-link" id="previousLink" >45</a>
                         </li>
                         <li>
-                            <a class="pagination-link is-current" id="currentLink">46</a>
+                            <a class="pagination-link is-current" id="currentLink" >46</a>
                         </li>
                         <li>
-                            <a class="pagination-link" id="nextLink">47</a>
+                            <a class="pagination-link" id="nextLink" >47</a>
                         </li>
                         <li>
                             <span class="pagination-ellipsis">&hellip;</span>
                         </li>
                         <li>
-                            <a class="pagination-link" id="lastLink">86</a>
+                            <a class="pagination-link" id="lastLink" >86</a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </section>
+
+
         <script>
 
             document.querySelector('option[value="<%=req.query.region%>"]').selected = true;
 
-            function setPagination() {
+            function setPagination(limit, offset) {
 
 
                 var previousButton = document.getElementById("previousButton");
@@ -236,26 +209,37 @@
                 var lastLink = document.getElementById("lastLink");
 
                 var numOfRecords = parseInt("<%= numOfRecords %>");
-                console.log("numOfRecords" + numOfRecords);
-                var limit = Math.max(2, 1) || 1;
-                var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+
+                //console.log("numOfRecords" + numOfRecords);
+                //var limit = Math.max(2, 1) || 1;
+                //var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
 
 
 
 
-                var baseUrl = "/coupon/search?region=" + "<%= req.query.region %>" + "&minCoin=" + "<%= req.query.minCoin %>" + "&maxCoin=" + "<%= req.query.maxCoin %>" + "&vaildOn=" + "<%= req.query.vaildOn %>" + "&limit=" + limit + "&offset=";
+                //var baseUrl = "/coupon/search?region=" + "<%= req.query.region %>" + "&minCoin=" + "<%= req.query.minCoin %>" + "&maxCoin=" + "<%= req.query.maxCoin %>" + "&vaildOn=" + "<%= req.query.vaildOn %>" + "&limit=" + limit + "&offset=";
 
 
 
-                firstLink.href = baseUrl + 0;
-                previousButton.href = baseUrl + (offset - limit);
+                //firstLink.href = baseUrl + 0;
+                //previousButton.href = baseUrl + (offset - limit);
 
 
-                previousLink.href = baseUrl + (offset - limit);
-                currentLink.href = baseUrl + offset;
-                nextLink.href = baseUrl + (offset + limit);
-                nextButton.href = baseUrl + (offset + limit);
-                lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+                //previousLink.href = baseUrl + (offset - limit);
+                //currentLink.href = baseUrl + offset;
+                //nextLink.href = baseUrl + (offset + limit);
+                //nextButton.href = baseUrl + (offset + limit);
+                //lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+
+                firstLink.onclick = function () { fetchCoupon(limit, 0) };
+                previousButton.onclick = function () { fetchCoupon(limit, offset - limit) };
+                previousLink.onclick = function () { fetchCoupon(limit, offset - limit) };
+                currentLink.onclick = function () { fetchCoupon(limit, offset) };
+                nextLink.onclick = function () { fetchCoupon(limit, offset + limit) };
+                nextButton.onclick = function () { fetchCoupon(limit, offset + limit) };
+                lastLink.onclick = function () { fetchCoupon(limit, (Math.ceil(numOfRecords / limit) - 1) * limit) };
+
+
 
                 var currentPageNumber = Math.floor(offset / limit) + 1;
 
@@ -266,17 +250,92 @@
 
                 if (offset < limit) {
                     previousButton.setAttribute("disabled", true);
-                    previousButton.href = "";
+                    //previousButton.href = "";
                     previousLink.style.display = "none";
+                }else{
+                    previousButton.removeAttribute("disabled");
+                    previousLink.style.display = "inline";
                 }
 
                 if (offset + limit >= numOfRecords) {
                     nextButton.setAttribute("disabled", true);
-                    nextButton.href = "";
+                    //nextButton.href = "";
                     nextLink.style.display = "none";
+                }else{
+                    nextButton.removeAttribute("disabled");
+                    nextButton.style.display = "inline";
                 }
             }
 
-            setPagination();
+          
+
+
+
+
+        </script>
+
+        <script>
+
+            async function fetchCoupon(limit, offset) {
+                var response = await fetch("/coupon/search?limit=" + limit + "&offset=" + offset);
+
+                if (response.ok) {
+                    var coupons = await response.json();
+
+                    var dynamicCode = '';
+
+                    var count = 0;
+
+                    coupons.forEach(function (coupon) {
+                        dynamicCode += '<div class="couponContainerRead"><div class="columns is-mobile is-multiline is-vcentered">' +
+                            '<a href="http://localhost:1337/coupon/detail/' + coupon.id + '"/>'                                       // be careful the "" and ''
+                            + '<figure><img style= "object-fit:cover" src="' + coupon.image + '"/> </figure>'                          // be careful the "" and ''
+                            + '<div class="text-block"><p><strong>' + coupon.restaurant + '</strong></p><p>' + coupon.title + '</p><br><p>Coind:' + coupon.coin + '</p></div><br></a></div></div></div>';
+
+                        ++count;
+
+                        if (count == 1) {
+
+                            dynamicCode += ' <div class="container" style="margin-right: 60px;"></div>';
+                        } else {
+                            dynamicCode += '<div class="container" style="margin-right: 350px; margin-left: 50px;"><p>No Coupons found</p></div><div class="container" style="margin-right: 100px;"></div>'
+                        }
+
+                        document.querySelector("#search").innerHTML = dynamicCode;
+
+
+                        setPagination(limit, offset);
+                    });
+
+
+                } else {
+                    alert(response.status + ": " + response.statusText);
+                }
+
+
+
+
+            }
+
+            fetchCoupon(2, 0);
+
+        </script>
+
+        <script>
+            async function logout() {
+
+                var response = await fetch("/user/logout", {
+                    method: "POST",
+                });
+
+                if (response.ok) {
+                    alert("You have been logged out.");
+                    location.assign("http://localhost:1337/coupon/read");
+                } else {
+                    alert(response.statusText);
+                }
+
+            }
+
 
         </script>
