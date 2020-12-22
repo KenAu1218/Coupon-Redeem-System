@@ -62,6 +62,8 @@ module.exports.routes = {
 
     'GET /user/:id/coupon/:fk' : 'UserController.check',
 
+    'GET /user/json': 'UserController.json',
+
     /***************************************************************************
     *                                                                          *
     * More custom routes here...                                               *

@@ -10,15 +10,15 @@ module.exports = {
     login: async function (req, res) {
 
         if (req.method == "GET") return res.view('user/login');
-
-        if (!req.body.username || !req.body.password) return res.badRequest();
-
+        console.log("21312");
+        if (!req.body.username || !req.body.password) return  res.status(401).json("username&passwordundefine");
+        console.log("0");
         var user = await User.findOne({ username: req.body.username });
-
+        console.log("1");
         if (!user) return res.status(401).json("User not found");
-
+        console.log("2");
         var match = await sails.bcrypt.compare(req.body.password, user.password);
-
+        console.log("3");
         if (!match) return res.status(401).json("Wrong Password");
 
         // Reuse existing session 
@@ -172,6 +172,14 @@ module.exports = {
           
         return res.status(204).send();
         }
+    },
+
+     // json function
+     json: async function (req, res) {
+
+        var everyuser = await User.find();
+
+        return res.json(everyuser);
     },
 
 };
