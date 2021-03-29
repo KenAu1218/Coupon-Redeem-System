@@ -66,7 +66,7 @@ module.exports.bootstrap = async function () {
         await User.createEach([
             { username: "admin", password: hash1, role: "admin", coin: 500},
             { username: "Ken", password: hash2, role: "member", coin: 500},
-            { username: "Paula", password: hash3, role: "member", coin: 500},
+            { username: "user", password: hash3, role: "member", coin: 500},
             { username: "JohnsonBaby", password: hash3 ,coin: 500},
             // etc.
         ]);
@@ -76,10 +76,10 @@ module.exports.bootstrap = async function () {
         const coupon3 = await Coupon.findOne({ restaurant: "Stanford Cafe", title: "Free Lunch"});
         const admin = await User.findOne({ username: "admin" });
         const Ken = await User.findOne({ username: "Ken" });
-        const Paula = await User.findOne({ username: "Paula" });
+        const user = await User.findOne({ username: "user" });
 
         await User.addToCollection(admin.id, 'have').members(coupon1.id);
         await User.addToCollection(Ken.id, 'have').members([coupon2.id, coupon3.id]);
-        await User.addToCollection(Paula.id, 'have').members(coupon3.id);
+        await User.addToCollection(user.id, 'have').members(coupon3.id);
     }
 };
