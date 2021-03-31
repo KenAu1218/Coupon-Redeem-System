@@ -8,6 +8,6 @@ Next, input "sails lift"
 
 Testing account:
 
-- Admin: admin, 1234
-- User: user, 5678
+- Admin: admin, 03123
+- User: user, 03123
 
