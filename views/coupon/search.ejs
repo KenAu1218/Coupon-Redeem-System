@@ -1,77 +1,78 @@
 <!--paginate.ejs-->
 
 <section>
-    <div class="container">
-        <nav class="navbar navbar-default navbar-static-top is-full" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item">
-                    <img src="https://dynamic.brandcrowd.com/asset/logo/99cb1360-acee-42a6-b0d7-d89aa74e8874/logo?v=4"
-                        class="logoCoupon">
-                </a>
+ <div class="container">
+  <nav class="navbar navbar-default navbar-static-top is-full" role="navigation" aria-label="main navigation">
+   <div class="navbar-brand">
+    <a class="navbar-item">
+     <img src="https://dynamic.brandcrowd.com/asset/logo/99cb1360-acee-42a6-b0d7-d89aa74e8874/logo?v=4"
+      class="logoCoupon">
+    </a>
 
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+     data-target="navbarBasicExample">
+     <span aria-hidden="true"></span>
+     <span aria-hidden="true"></span>
+     <span aria-hidden="true"></span>
+    </a>
+   </div>
 
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item" href="http://localhost:1337/coupon">
-                        Home
-                    </a>
+   <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+     <a class="navbar-item" href="http://localhost:1337/coupon">
+      Home
+     </a>
 
-                    <a class="navbar-item" href="http://localhost:1337/coupon/search">
-                        Search
-                    </a>
+     <a class="navbar-item" href="http://localhost:1337/coupon/search">
+      Search
+     </a>
 
-                    <% if(user.username){ %>
-                    <a class="navbar-item" href="http://localhost:1337/user/redeem">
-                        My Redeemed Coupons
-                    </a>
-                    <% } %>
+     <% if(user.username){ %>
+      <a class="navbar-item" href="http://localhost:1337/user/redeem">
+       My Redeemed Coupons
+      </a>
+      <% } %>
 
-                    <% if(user.username && user.role == "admin"){ %>
-                    <a class="navbar-item" href="http://localhost:1337/coupon/create">
-                        Create
-                    </a>
+       <% if(user.username && user.role=="admin" ){ %>
+        <a class="navbar-item" href="http://localhost:1337/coupon/create">
+         Create
+        </a>
 
-                    <a class="navbar-item" href="http://localhost:1337/coupon/admin">
-                        Admin
-                    </a>
-                    <% } %>
+        <a class="navbar-item" href="http://localhost:1337/coupon/admin">
+         Admin
+        </a>
+        <% } %>
 
-                </div>
-            </div>
-
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <% if(!user.username){ %>
-                        <a class="button is-primary" id="signUp">
-                            <strong id="kk">Sign up</strong>
-                        </a>
-
-                        <a class="button is-light" href="http://localhost:1337/user/login">
-                            Log in
-                        </a>
-                        <% }else { %>
-
-                        <p>hi, <%= user.username %></p>
-
-                        <button class="button is-light" onclick="logout()">
-                            Log out
-                        </button>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-        </nav>
     </div>
+   </div>
+
+
+   <div class="navbar-end">
+    <div class="navbar-item">
+     <div class="buttons">
+      <% if(!user.username){ %>
+       <a class="button is-primary" id="signUp">
+        <strong id="kk">Sign up</strong>
+       </a>
+
+       <a class="button is-light" href="http://localhost:1337/user/login">
+        Log in
+       </a>
+       <% }else { %>
+
+        <p>hi, <%= user.username %>
+        </p>
+
+        <button class="button is-light" onclick="logout()">
+         Log out
+        </button>
+        <% } %>
+     </div>
+    </div>
+   </div>
+
+  </nav>
+ </div>
 </section>
 
 <br>
@@ -79,263 +80,324 @@
 
 
 <Section>
-    <div class="container">
-        <p><Strong>Coupon</Strong></p>
-        <p>Redeem your coins for dining coupons</p>
-    </div>
+ <div class="container">
+  <p><Strong>Coupon</Strong></p>
+  <p>Redeem your coins for dining coupons</p>
+ </div>
 </Section>
 <br>
 <br>
 
 <section>
 
-    <div id="search"></div>
-
-
-
-    <!--<div class="couponContainerRead" >-->
-
-    <div class="columns is-mobile is-multiline is-vcentered">
-
-
-        <div class="column is-mobile">
-            <!--can't perform without this-->
-
-            <form action="/coupon/search" method="GET">
-                <!--can't perform without this-->
-
-                <div class="field">
-                    <label class="label">Region</label>
-                    <div class="control">
-                        <div class="select">
-                            <select name="region" id="region123">
-                                <option value="">Not Specified</option>
-                                <option value="KWL">Kowloon</option>
-                                <option value="HKI">HK Island</option>
-                                <option value="NT">New Territories</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+ <div id="search" style="display: inline;"></div>
+
+
+
+ <!--<div class="couponContainerRead" >-->
+
+ <div   class="columns is-mobile is-multiline is-vcentered">
+
+
+  <div class="column is-mobile">
+   <!--can't perform without this-->
+
+   <form action="/coupon/search" method="GET" onsubmit="setPagination(this, 2, 0);return false">
+    <!--can't perform without this-->
+
+    <div class="field">
+     <label class="label">Region</label>
+     <div class="control">
+      <div class="select">
+       <select name="region" id="region123">
+        <option value="">Not Specified</option>
+        <option value="KWL">Kowloon</option>
+        <option value="HKI">HK Island</option>
+        <option value="NT">New Territories</option>
+       </select>
+      </div>
+     </div>
+    </div>
+
+    <div class="field">
+     <label class="label">Min Coin</label>
+     <div class="control">
+      <input class="input" type="number" name="minCoin" id="minCoin" value="<%= req.query.minCoin%>">
+     </div>
+    </div>
 
-                <div class="field">
-                    <label class="label">Min Coin</label>
-                    <div class="control">
-                        <input class="input" type="number" name="minCoin" id="minCoin" value="<%= req.query.minCoin%>">
-                    </div>
-                </div>
+    <div class="field">
+     <label class="label">Max Coin</label>
+     <div class="control">
+      <input class="input" type="number" name="maxCoin" id="maxCoin" value="<%= req.query.maxCoin %>">
+     </div>
+    </div>
 
-                <div class="field">
-                    <label class="label">Max Coin</label>
-                    <div class="control">
-                        <input class="input" type="number" name="maxCoin" id="maxCoin" value="<%= req.query.maxCoin %>">
-                    </div>
-                </div>
+    <div class="field">
+     <label class="label">Vaild On and Before</label>
+     <div class="control">
+      <input class="input" type="date" name="vaildOn" id="vaildOn" min="2018-01-01" max="2046-12-31"
+       value="<%= req.query.vaildOn %>">
+     </div>
+    </div>
+
+
+    <div class="field">
+     <div class="control">
+      <button class="button is-link" type="submit">Search</button>
+     </div>
+    </div>
+   </form>
+
+
+   <!--<div>                          have different effect-->
+  </div>
+ </div> <!-- have different effect-->
+
+ <section>
 
-                <div class="field">
-                    <label class="label">Vaild On and Before</label>
-                    <div class="control">
-                        <input class="input" type="date" name="vaildOn" id="vaildOn" min="2018-01-01" max="2046-12-31"
-                            value="<%= req.query.vaildOn %>">
-                    </div>
-                </div>
 
+  <br>
+  <br>
 
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-link" type="submit">Search</button>
-                    </div>
-                </div>
-            </form>
 
+  <section>
+   <div class="container">
+    <nav class="pagination" role="navigation" aria-label="pagination">
+     <button class="pagination-previous" id="previousButton">Previous</button>
+     <button class="pagination-next" id="nextButton">Next page</button>
+     <ul class="pagination-list">
+      <li>
+       <a class="pagination-link" id="firstLink">1</a>
+      </li>
+      <li>
+       <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+      <li>
+       <a class="pagination-link" id="previousLink">45</a>
+      </li>
+      <li>
+       <a class="pagination-link is-current" id="currentLink">46</a>
+      </li>
+      <li>
+       <a class="pagination-link" id="nextLink">47</a>
+      </li>
+      <li>
+       <span class="pagination-ellipsis">&hellip;</span>
+      </li>
+      <li>
+       <a class="pagination-link" id="lastLink">86</a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </section>
 
-            <!--<div>                          have different effect-->
-        </div>
-    </div> <!-- have different effect-->
 
-    <section>
+  <script>
 
+   document.querySelector('option[value="<%=req.query.region%>"]').selected = true;
 
-        <br>
-        <br>
+   async function setPagination(formElem, limit, offset) {
 
 
-        <section>
-            <div class="container">
-                <nav class="pagination" role="navigation" aria-label="pagination">
-                    <button class="pagination-previous" id="previousButton" >Previous</button>
-                    <button class="pagination-next" id="nextButton" >Next page</button>
-                    <ul class="pagination-list">
-                        <li>
-                            <a class="pagination-link" id="firstLink" >1</a>
-                        </li>
-                        <li>
-                            <span class="pagination-ellipsis">&hellip;</span>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="previousLink" >45</a>
-                        </li>
-                        <li>
-                            <a class="pagination-link is-current" id="currentLink" >46</a>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="nextLink" >47</a>
-                        </li>
-                        <li>
-                            <span class="pagination-ellipsis">&hellip;</span>
-                        </li>
-                        <li>
-                            <a class="pagination-link" id="lastLink" >86</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </section>
+    var numOfRecords = await selectReqiredCoupon(formElem, limit, offset);
 
+    console.log("numOfRecords " + numOfRecords);
 
-        <script>
 
-            document.querySelector('option[value="<%=req.query.region%>"]').selected = true;
+    var previousButton = document.getElementById("previousButton");
+    var nextButton = document.getElementById("nextButton");
+    var currentLink = document.getElementById("currentLink");
+    var previousLink = document.getElementById("previousLink");
+    var nextLink = document.getElementById("nextLink");
+    var firstLink = document.getElementById("firstLink");
+    var lastLink = document.getElementById("lastLink");
 
-            function setPagination(limit, offset) {
 
+    firstLink.onclick = function () { setPagination(formElem, limit, 0) };
+    previousButton.onclick = function () { setPagination(formElem, limit, offset - limit) };
+    previousLink.onclick = function () { setPagination(formElem, limit, offset - limit) };
+    currentLink.onclick = function () { setPagination(formElem, limit, offset) };
+    nextLink.onclick = function () { setPagination(formElem, limit, offset + limit) };
+    nextButton.onclick = function () { setPagination(formElem, limit, offset + limit) };
+    lastLink.onclick = function () { setPagination(formElem, limit, (Math.ceil(numOfRecords / limit) - 1) * limit) };
 
-                var previousButton = document.getElementById("previousButton");
-                var nextButton = document.getElementById("nextButton");
-                var currentLink = document.getElementById("currentLink");
-                var previousLink = document.getElementById("previousLink");
-                var nextLink = document.getElementById("nextLink");
-                var firstLink = document.getElementById("firstLink");
-                var lastLink = document.getElementById("lastLink");
 
-                var numOfRecords = parseInt("<%= numOfRecords %>");
 
-                //console.log("numOfRecords" + numOfRecords);
-                //var limit = Math.max(2, 1) || 1;
-                //var offset = Math.max(parseInt("<%= req.query.offset %>"), 0) || 0;
+    var currentPageNumber = Math.floor(offset / limit) + 1;
 
+    previousLink.innerHTML = currentPageNumber - 1;
+    currentLink.innerHTML = currentPageNumber;
+    nextLink.innerHTML = currentPageNumber + 1;
+    lastLink.innerHTML = Math.ceil(numOfRecords / limit);
 
+    if (offset < limit) {
+     previousButton.setAttribute("disabled", true);
+     //previousButton.href = "";
+     previousLink.style.display = "none";
+    } else {
+     previousButton.removeAttribute("disabled");
+     previousLink.style.display = "inline";
+    }
 
+    if (offset + limit >= numOfRecords) {
+     nextButton.setAttribute("disabled", true);
+     //nextButton.href = "";
+     nextLink.style.display = "none";
+    } else {
+     nextButton.removeAttribute("disabled");
+     nextButton.style.display = "inline";
+    }
+   }
 
-                //var baseUrl = "/coupon/search?region=" + "<%= req.query.region %>" + "&minCoin=" + "<%= req.query.minCoin %>" + "&maxCoin=" + "<%= req.query.maxCoin %>" + "&vaildOn=" + "<%= req.query.vaildOn %>" + "&limit=" + limit + "&offset=";
 
 
 
-                //firstLink.href = baseUrl + 0;
-                //previousButton.href = baseUrl + (offset - limit);
 
 
-                //previousLink.href = baseUrl + (offset - limit);
-                //currentLink.href = baseUrl + offset;
-                //nextLink.href = baseUrl + (offset + limit);
-                //nextButton.href = baseUrl + (offset + limit);
-                //lastLink.href = baseUrl + (Math.ceil(numOfRecords / limit) - 1) * limit;
+  </script>
 
-                firstLink.onclick = function () { fetchCoupon(limit, 0) };
-                previousButton.onclick = function () { fetchCoupon(limit, offset - limit) };
-                previousLink.onclick = function () { fetchCoupon(limit, offset - limit) };
-                currentLink.onclick = function () { fetchCoupon(limit, offset) };
-                nextLink.onclick = function () { fetchCoupon(limit, offset + limit) };
-                nextButton.onclick = function () { fetchCoupon(limit, offset + limit) };
-                lastLink.onclick = function () { fetchCoupon(limit, (Math.ceil(numOfRecords / limit) - 1) * limit) };
+  <script>
 
+   setPagination(null, 2, 0);
 
+   async function selectReqiredCoupon(queryForm, limit, offset) {
 
-                var currentPageNumber = Math.floor(offset / limit) + 1;
+    var queryString;
 
-                previousLink.innerHTML = currentPageNumber - 1;
-                currentLink.innerHTML = currentPageNumber;
-                nextLink.innerHTML = currentPageNumber + 1;
-                lastLink.innerHTML = Math.ceil(numOfRecords / limit);
+    if (queryForm) { queryString = new URLSearchParams(new FormData(queryForm)).toString(); }
 
-                if (offset < limit) {
-                    previousButton.setAttribute("disabled", true);
-                    //previousButton.href = "";
-                    previousLink.style.display = "none";
-                }else{
-                    previousButton.removeAttribute("disabled");
-                    previousLink.style.display = "inline";
-                }
 
-                if (offset + limit >= numOfRecords) {
-                    nextButton.setAttribute("disabled", true);
-                    //nextButton.href = "";
-                    nextLink.style.display = "none";
-                }else{
-                    nextButton.removeAttribute("disabled");
-                    nextButton.style.display = "inline";
-                }
-            }
 
-          
+    var wholeString = "/coupon/search?limit=" + limit + "&offset=" + offset + "&";
 
+    if (queryString != "") {
+     wholeString = wholeString + queryString;
+    }
 
+    var response = await fetch(wholeString, {
+     method: "GET",
+     //body: new FormData(queryForm),
+    });
 
+    if (response.ok) {
+     var coupons = await response.json();
 
-        </script>
+     console.log(coupons.thoseCoupon);
 
-        <script>
+     //console.log(coupons[0]);
+     //console.log(coupons[1]);
 
-            async function fetchCoupon(limit, offset) {
-                var response = await fetch("/coupon/search?limit=" + limit + "&offset=" + offset);
 
-                if (response.ok) {
-                    var coupons = await response.json();
+     var dynamicCode = '';
 
-                    var dynamicCode = '';
+     if (parseInt(coupons.totalCoupon) == 0) {
+        console.log("yes");
+        dynamicCode += `<div class="noCoupon"><p class="text"> No coupon displayed <p><div>`;
+        document.querySelector("#search").innerHTML = dynamicCode;
 
-                    var count = 0;
+        return parseInt(coupons.totalCoupon);
+       }
 
-                    coupons.forEach(function (coupon) {
-                        dynamicCode += '<div class="couponContainerRead"><div class="columns is-mobile is-multiline is-vcentered">' +
-                            '<a href="http://localhost:1337/coupon/detail/' + coupon.id + '"/>'                                       // be careful the "" and ''
-                            + '<figure><img style= "object-fit:cover" src="' + coupon.image + '"/> </figure>'                          // be careful the "" and ''
-                            + '<div class="text-block"><p><strong>' + coupon.restaurant + '</strong></p><p>' + coupon.title + '</p><br><p>Coind:' + coupon.coin + '</p></div><br></a></div></div></div>';
+   
+      coupons.thoseCoupon.forEach(function (coupon) {
 
-                        ++count;
 
-                        if (count == 1) {
+       dynamicCode += '<div class="couponContainerRead"><div class="columns is-mobile is-multiline is-vcentered">' +
+        '<a href="http://localhost:1337/coupon/detail/' + coupon.id + '"/>'                                       // be careful the "" and ''
+        + '<figure><img style= "object-fit:cover" src="' + coupon.image + '"/> </figure>'                          // be careful the "" and ''
+        + '<div class="text-block"><p><strong>' + coupon.restaurant + '</strong></p><p>' + coupon.title + '</p><br><p>Coind:' + coupon.coin + '</p></div><br></a></div></div></div>';
 
-                            dynamicCode += ' <div class="container" style="margin-right: 60px;"></div>';
-                        } else {
-                            dynamicCode += '<div class="container" style="margin-right: 350px; margin-left: 50px;"><p>No Coupons found</p></div><div class="container" style="margin-right: 100px;"></div>'
-                        }
 
-                        document.querySelector("#search").innerHTML = dynamicCode;
 
+       document.querySelector("#search").innerHTML = dynamicCode;
 
-                        setPagination(limit, offset);
-                    });
+      });
 
+     
+     //console.log("coupons.totalCoupon " + coupons.totalCoupon);
 
-                } else {
-                    alert(response.status + ": " + response.statusText);
-                }
+     return parseInt(coupons.totalCoupon);
 
+    } else {
+     alert(response.status + ": " + response.statusText);
+    }
 
+   }
 
 
-            }
+  </script>
 
-            fetchCoupon(2, 0);
 
-        </script>
+  <script>
 
-        <script>
-            async function logout() {
 
-                var response = await fetch("/user/logout", {
-                    method: "POST",
-                });
 
-                if (response.ok) {
-                    alert("You have been logged out.");
-                    location.assign("http://localhost:1337/coupon/read");
-                } else {
-                    alert(response.statusText);
-                }
+  // async function fetchCoupon(limit, offset) {
+  //  var response = await fetch("/coupon/search?limit=" + limit + "&offset=" + offset, {
+  //   method: "GET",
+  //   //body: null,
+  //  });
 
-            }
+  //  if (response.ok) {
+  //   var coupons = await response.json();
 
+  //   var dynamicCode = '';
 
-        </script>
+  //   var count = 0;
+
+  //   coupons.forEach(function (coupon) {
+  //    dynamicCode += '<div class="couponContainerRead"><div class="columns is-mobile is-multiline is-vcentered">' +
+  //     '<a href="http://localhost:1337/coupon/detail/' + coupon.id + '"/>'                                       // be careful the "" and ''
+  //     + '<figure><img style= "object-fit:cover" src="' + coupon.image + '"/> </figure>'                          // be careful the "" and ''
+  //     + '<div class="text-block"><p><strong>' + coupon.restaurant + '</strong></p><p>' + coupon.title + '</p><br><p>Coind:' + coupon.coin + '</p></div><br></a></div></div></div>';
+
+  //    ++count;
+
+  //    if (count == 1) {
+
+  //     dynamicCode += ' <div class="container" style="margin-right: 60px;"></div>';
+  //    } else {
+  //     dynamicCode += '<div class="container" style="margin-right: 350px; margin-left: 50px;"><p>No Coupons found</p></div><div class="container" style="margin-right: 100px;"></div>'
+  //    }
+
+  //    document.querySelector("#search").innerHTML = dynamicCode;
+
+  //    console.log(count);
+
+
+  //   });
+
+  //   setPagination(limit, offset);
+
+  //  } else {
+  //   alert(response.status + ": " + response.statusText);
+  //  }
+
+  // }
+
+
+  // fetchCoupon(2, 0);
+
+
+  //</script>
+
+  <script>
+   async function logout() {
+
+    var response = await fetch("/user/logout", {
+     method: "POST",
+    });
+
+    if (response.ok) {
+     alert("You have been logged out.");
+     location.assign("http://localhost:1337/coupon/read");
+    } else {
+     alert(response.statusText);
+    }
+
+   }
+
+
+  </script>

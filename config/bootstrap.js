@@ -59,14 +59,14 @@ module.exports.bootstrap = async function () {
             return;
         }
 
-        var hash1 = await sails.bcrypt.hash('1234', salt);
-        var hash2 = await sails.bcrypt.hash('5678', salt);
-        var hash3 = await sails.bcrypt.hash('9990', salt);
+        var hash1 = await sails.bcrypt.hash('03123', salt);
+        var hash2 = await sails.bcrypt.hash('03123', salt);
+        var hash3 = await sails.bcrypt.hash('03123', salt);
 
         await User.createEach([
             { username: "admin", password: hash1, role: "admin", coin: 500},
             { username: "Ken", password: hash2, role: "member", coin: 500},
-            { username: "user", password: hash3, role: "member", coin: 500},
+            { username: "user", password: hash2, role: "member", coin: 500},
             { username: "JohnsonBaby", password: hash3 ,coin: 500},
             // etc.
         ]);
